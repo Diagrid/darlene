@@ -1,0 +1,47 @@
+<html>
+<head>
+</head>
+<body id="theBody">
+  <audio id="ost" src="music/ost.mp3" autoplay="true" loop="true"></audio>
+  <div id="titleWrapper">
+    <div id="imageTitleWrapper">
+      <!-- <img src="images/titleImage.png"> -->
+      
+    </div>
+    <div id="txtTitleWrapper">
+      <h3>- Press Enter to Start -</h3>
+    </div>
+  </div>
+  <div id="introText">
+    <p>Nevada, 1872</p> 
+    <p>Your journey West is on the brink of failure - the crops aren’t growing, you have no money, and you’re running out of time; you won’t survive another winter without a change in fortune. </p> 
+    <p>Your wife, Darlene, is all you have left. She has gone out in search of water, but she hasn’t been back for some time. </p>
+    <p>Sitting upon your porch, you hear a rumble, and dust rises in the distance. She’s in danger. </p>
+    <p>You have to find Darlene, and quickly, before the desert consumes her. </p>
+  </div>
+
+  <!-- Game content -->
+  <div id="output"></div> 
+
+  <!-- Player input -->
+  <div class="input">
+    <span class="ml-2">> </span><input id="input" autofocus spellcheck="false">
+  </div> 
+
+  <!-- CSS styles -->
+  <link id="styles" rel="stylesheet" type="text/css" href="styles/darlene.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
+
+  <!-- Include game engine -->
+  <script src="index.js"></script>
+
+  <!-- Include game data ('disk') -->
+  <script src="game-disks/darlene2.js"></script>
+
+  <!-- Load disk into engine -->
+  <script>loadDisk(darlene);</script>
+
+</body>
+</html>
