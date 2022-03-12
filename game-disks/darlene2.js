@@ -619,12 +619,24 @@ const darlene = {
   firstDesc: `There is a rockwall to the North and East, but you can still head South or West.`,
   exits: [
     {
-      dir: 'xxx',
-      id: 'xxx',
+      dir: 'north',
+      id: 'mineDeath',
     },
   ],
 },
 
+{
+  id: 'mineDeath',
+  name: 'Abandoned Mine',
+  desc: `Darlene’s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
+  firstDesc: `There is a rockwall to the North and East, but you can still head South or West.`,
+  exits: [
+    {
+      dir: 'north',
+      id: 'mineDeath',
+    },
+  ],
+},
 
 
 // room template
@@ -761,6 +773,14 @@ const darlene = {
         }
       }
     },
+    slideUp: (callback) => {
+      for(var i = 0; i < document.getElementById("titleWrapper").getElementsByTagName('img').length; i++){
+        document.getElementById("titleWrapper").getElementsByTagName('img')[i].classList.add('transition');
+      }
+      document.getElementById("imageTitleWrapper").classList.add('overlaySlideUp')
+      document.getElementById("txtTitleWrapper").classList.add('transition')
+      callback();
+    },
     runEnding: (dir, track) => {
 
     }
@@ -793,13 +813,22 @@ document.getElementById("audioOn").addEventListener("click", function(){
 
 
 function startingAnim(){
-  helper.anim(document.getElementById('titleWrapper'), 'fadeOut', [0,5], () =>{
-    document.getElementById('titleWrapper').classList.add('hide');
-    document.getElementById('introText').classList.add('show');
+  helper.slideUp(() => {
     helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [1,3,3,3,3,5], () =>{
       document.getElementsByClassName('input')[0].className = 'input';
       // helper.anim(document.getElementsByClassName('input'), 'fadeIn')
       loadDisk(darlene);
     })
-  })
+  });
+  // helper.anim(document.getElementById('titleWrapper'), 'fadeOut', [0,5], () =>{
+  //   document.getElementById('titleWrapper').classList.add('hide');
+  //   document.getElementById('introText').classList.add('show');
+  //   helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [1,3,3,3,3,5], () =>{
+  //     document.getElementsByClassName('input')[0].className = 'input';
+  //     // helper.anim(document.getElementsByClassName('input'), 'fadeIn')
+  //     loadDisk(darlene);
+  //   })
+  // })
 }
+
+
