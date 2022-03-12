@@ -13,7 +13,7 @@ const darlene = {
         id: 'home', // Unique identifier for this room. Entering a room will set the disk's roomId to this.
         name: 'Your home', // Displayed each time the player enters the room.
         desc: `You are in front of your house.`, // Displayed when the player first enters the room.
-        firstDesc:`To the North is your farm, to the East is the path through the valley, and to the West is the pass over the mountains.`,
+        firstDesc:`To the !!North!! is your farm, to the !!East!! is the path through the valley, and to the West is the pass over the mountains.`,
         items: [
           {
             name: ['Flask', 'bottle'],
@@ -125,12 +125,26 @@ const darlene = {
             desc: 'It has Henry Western emblazoned on the side.', // Displayed when the player looks at the item.
             longName: `There is a rusty shotgun atop it, with Henry Western emblazoned upon its strap.`,
             isTakeable: true,
+            loaded:1,
             onUse: function () {
-              
+              var gun = getItemInInventory('gun');
               if (disk.roomId === 'valleyWolf') {
                 println ('You fire your only shot at the poor beast and miss. It scatters into the distance. You’re unlikely to see him again, but you feel restless with him on the loose regardless.')
                 enterRoom ('valley')
+              }else if(disk.roomId === 'mine'){
+                if(gun.loaded == 1){
+                  println ('You fire a shot into the bear. Mid run, the beast stumbles. Turning away from them both, it cowers away into the storm, leaving you and your wife be.')
+                  println ('Darlene looks at you with a gleam in her eye.')
+                  println ('She’s safe now, and she has something to tell you...')
+                  helper.runEnding();
+                }else{
+                  println ('The gun is not loaded. The bear presses towards Darlene at pace.');
+                  println ('You can fight him barehanded, or flee.');
+                  helper.runEnding();
+                }
+                
               }
+              gun.loaded = 0;
             },
             onTake: function () {
               println(`You take the gun - there is a single shell in its chamber`)
@@ -714,24 +728,41 @@ const darlene = {
       if(typeof(deathMessage) === "undefined" || deathMessage.length === 0){
         deathMessage = 'Yep you&apos;re definitely dead, I checked...';
       }
-      darlene = {};
+      // darlene = {};
+      helper.fadeAudio(false, "ost");
+      helper.toggleAudio(true, "deathEnd");
       document.getElementById('deathScree').getElementsByTagName('p')[0].innerHTML = deathMessage;
       document.getElementById('deathScree').className='';
       document.getElementById('btnRestart').addEventListener('click', function(event) {
         window.document.location = window.document.location
       });
     },
-    toggleAudio: (state) => {
+    toggleAudio: (state, track) => {
       if(state){
           document.getElementById("audioOn").classList = ""
           document.getElementById("audioOff").classList.add("hide")
-          document.getElementById("ost").play();
-          document.getElementById("ost").volume = 0.3;
+          document.getElementById(track).play();
+          document.getElementById(track).volume = 0.3;
       }else{
           document.getElementById("audioOn").classList.add("hide")
           document.getElementById("audioOff").classList = ""
-          document.getElementById("ost").pause();
+          document.getElementById(track).pause();
       }
+    },
+    fadeAudio: (dir, track) => {
+      if(dir){
+        
+      }else{
+        while(document.getElementById(track).volume > 0){
+          var temp = document.getElementById(track).volume
+          temp = (temp - 0.0001).toFixed(4);
+          console.log(temp)
+          document.getElementById(track).volume = temp;
+        }
+      }
+    },
+    runEnding: (dir, track) => {
+
     }
   }
 
@@ -743,7 +774,7 @@ theBody.addEventListener('keyup', function(event) {
     firstEnter++
     if(firstEnter == 1){
       event.preventDefault();
-      helper.toggleAudio(true);
+      helper.toggleAudio(true, "ost");
       startingAnim()
     }else{
       if(typeof(disk) === "undefined"){
@@ -754,10 +785,10 @@ theBody.addEventListener('keyup', function(event) {
 });
 
 document.getElementById("audioOff").addEventListener("click", function(){
-  helper.toggleAudio(true);
+  helper.toggleAudio(true, "ost");
 })
 document.getElementById("audioOn").addEventListener("click", function(){
-  helper.toggleAudio(false);
+  helper.toggleAudio(false, "ost");
 })
 
 

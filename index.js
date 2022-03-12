@@ -665,10 +665,10 @@ let applyInput = (input) => {
 
 // allows wrapping text in special characters so println can convert them to HTML tags
 // string, string, string -> string
-let addStyleTags = (str, char, tagName) => {
+let addStyleTags = (str, char, tagName, className) => {
   let odd = true;
   while (str.includes(char)) {
-    const tag = odd ? `<${tagName}>` : `</${tagName}>`;
+    const tag = odd ? `<${tagName} class="${className}">` : `</${tagName}>`;
     str = str.replace(char, tag);
     odd = !odd;
   }
@@ -715,13 +715,14 @@ let println = (line, className) => {
   }else{
     newLine.classList.add('fadeIn');
   }
-
+  
   // support for markdown-like bold, italic, underline & strikethrough tags
   if (className != 'img') {
-    str = addStyleTags(str, '__', 'u');
-    str = addStyleTags(str, '**', 'b');
-    str = addStyleTags(str, '*', 'i');
-    str = addStyleTags(str, '~~', 'strike');
+    str = addStyleTags(str, '__', 'u', '');
+    str = addStyleTags(str, '**', 'b', '');
+    str = addStyleTags(str, '*', 'i', '');
+    str = addStyleTags(str, '~~', 'strike', '');
+    str = addStyleTags(str, '!!', 'span', 'keyWord');
   }
 
   // maintain line breaks

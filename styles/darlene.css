@@ -251,6 +251,11 @@ html {
   margin: 20px 0 0 0;
 }
 
+.keyWord{
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
 /* btn */
 .btn {
   color: #ebd5bd;
