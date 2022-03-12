@@ -44,7 +44,6 @@ let init = (disk) => {
 let setup = () => {
   input.addEventListener('keypress', (e) => {
     const ENTER = 13;
-
     if (e.keyCode === ENTER) {
       applyInput();
     }
@@ -489,19 +488,20 @@ let useItem = (itemName) => {
 // list items in room
 let items = () => {
   const room = getRoom(disk.roomId);
-  console.log(room)
   const items = (room.items || []).filter(item => !item.isHidden);
-
-  if (!items.length) {
+  if (!items.length && room.visits) {
     println(`There's nothing to pick up.`);
     return;
+  }else if(items.length && !room.visits){
+    println(`You take a look around`, `itemHeader`);
   }
-
-  //println(`You see the following:`);
+  
+  
+ 
   //items
    //.forEach(item => println(`${bullet} ${getName(item.name)}`));
   items
-    .forEach(item => println(`${item.longName}`));
+    .forEach(item => println(`${item.longName}`, 'itemList'));
 }
 
 // list characters in room
@@ -612,52 +612,54 @@ let commands = [
 // accepts optional string input; otherwise grabs it from the input element
 let applyInput = (input) => {
   input = input || getInput();
-  inputs.push(input);
-  inputsPos = inputs.length;
-  println(`> ${input}`);
+  if(input.length > 1){
+    inputs.push(input);
+    inputsPos = inputs.length;
+    println(`> ${input}`);
 
-  const val = input.toLowerCase();
-  setInput(''); // reset input field
+    const val = input.toLowerCase();
+    setInput(''); // reset input field
 
-  const exec = (cmd, arg) => {
-    if (cmd) {
-      cmd(arg);
-    } else if (disk.conversation) {
-      println(`Type the capitalized KEYWORD to select a topic.`);
-    } else {
-      println(`Sorry, I didn't understand your input. For a list of available commands, type HELP.`);
+    const exec = (cmd, arg) => {
+      if (cmd) {
+        cmd(arg);
+      } else if (disk.conversation) {
+        println(`Type the capitalized KEYWORD to select a topic.`);
+      } else {
+        println(`Sorry, I didn't understand your input. For a list of available commands, type HELP.`);
+      }
+    };
+
+    let args = val.split(' ')
+
+    // remove articles (except for the say command, which prints back what the user said)
+    if (args[0] !== 'say') {
+      args = args.filter(arg => arg !== 'a' && arg !== 'an' && arg != 'the');
     }
-  };
 
-  let args = val.split(' ')
+    const [command, ...arguments] = args;
+    const room = getRoom(disk.roomId);
 
-  // remove articles (except for the say command, which prints back what the user said)
-  if (args[0] !== 'say') {
-    args = args.filter(arg => arg !== 'a' && arg !== 'an' && arg != 'the');
-  }
-
-  const [command, ...arguments] = args;
-  const room = getRoom(disk.roomId);
-
-  if (arguments.length === 1) {
-    exec(commands[1][command], arguments[0]);
-  } else if (command === 'take' && arguments.length) {
-    // support for taking items with spaces in the names
-    // (just tries to match on the first word)
-    takeItem(arguments[0]);
-  } else if (command === 'use' && arguments.length) {
-    // support for using items with spaces in the names
-    // (just tries to match on the first word)
-    useItem(arguments[0]);
-  } else if (arguments.length >= commands.length) {
-    exec(commands[commands.length - 1][command], arguments);
-  } else if (room.exits && getExit(command, room.exits)) {
-    // handle shorthand direction command, e.g. "EAST" instead of "GO EAST"
-    goDir(command);
-  } else if (disk.conversation && (disk.conversation[command] || conversationIncludesTopic(disk.conversation, command))) {
-    talkToOrAboutX('about', command);
-  } else {
-    exec(commands[arguments.length][command], arguments);
+    if (arguments.length === 1) {
+      exec(commands[1][command], arguments[0]);
+    } else if (command === 'take' && arguments.length) {
+      // support for taking items with spaces in the names
+      // (just tries to match on the first word)
+      takeItem(arguments[0]);
+    } else if (command === 'use' && arguments.length) {
+      // support for using items with spaces in the names
+      // (just tries to match on the first word)
+      useItem(arguments[0]);
+    } else if (arguments.length >= commands.length) {
+      exec(commands[commands.length - 1][command], arguments);
+    } else if (room.exits && getExit(command, room.exits)) {
+      // handle shorthand direction command, e.g. "EAST" instead of "GO EAST"
+      goDir(command);
+    } else if (disk.conversation && (disk.conversation[command] || conversationIncludesTopic(disk.conversation, command))) {
+      talkToOrAboutX('about', command);
+    } else {
+      exec(commands[arguments.length][command], arguments);
+    }
   }
 };
 
@@ -710,6 +712,8 @@ let println = (line, className) => {
   // add a class for styling prior user input
   if (line[0] === '>') {
     newLine.classList.add('user');
+  }else{
+    newLine.classList.add('fadeIn');
   }
 
   // support for markdown-like bold, italic, underline & strikethrough tags
@@ -726,7 +730,9 @@ let println = (line, className) => {
   }
 
   output.appendChild(newLine).innerHTML = str;
-  window.scrollTo(0, document.body.scrollHeight);
+  setTimeout(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, 1000)
 };
 
 // predict what the user is trying to type
@@ -845,7 +851,7 @@ let enterRoom = (id) => {
   if(disk.desertCount === 3){
     println("You're getting thristy.");
   }else if(disk.desertCount === 4){
-    enterRoom('desertDeath')
+    helper.die('You feel your parched mouth try to etch a cry to Darlene, but nothing comes out. \nEverything turns red, then black, as her voice fades away.')
   }else{
     if (!room) {
       println(`That exit doesn't seem to go anywhere.`);
@@ -860,7 +866,7 @@ let enterRoom = (id) => {
 
     println(room.desc);
 
-    if (room.visits === 0) {
+    if (!room.visits) {
       println(room.firstDesc);
       
     }
@@ -873,7 +879,7 @@ let enterRoom = (id) => {
       room.onEnter({disk, println, getRoom, enterRoom});
     }
 
-    if (room.visits === 0) {
+    if (!room.visits) {
       items();
     }
 
@@ -991,15 +997,3 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 //   // loadDisk(darlene);
   
 // };
-
-// var theBody = document.getElementById("theBody");
-
-// // Execute a function when the user releases a key on the keyboard
-// theBody.addEventListener("keyup", function(event) {
-//   // Number 13 is the "Enter" key on the keyboard
-//   if (event.keyCode === 13) {
-//     // Cancel the default action, if needed
-//     event.preventDefault();
-//     startIntro();
-//   }
-// });

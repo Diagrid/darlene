@@ -25,11 +25,9 @@ const darlene = {
               if (disk.roomId === 'riverbed') {
                   takeItem ('water')
               }else if(getRoom(disk.roomId).name === 'Desert'){
-                console.log(disk.desertCount);
                 disk.desertCount = 0;
                 println('You feel refreshed.');
               }else{
-                console.log(disk.desertCount);
                 disk.desertCount = 0;
                 println('You feel refreshed, but perhaps there was a better time...');
               }
@@ -66,7 +64,6 @@ const darlene = {
             longName: "Just one piece of food is ready to eat - a piece of jerky hanging in front of you.",
             isTakeable: true,
             onUse: () => {
-              console.log(disk)
               if(disk.roomId === 'valleyWolf'){
                 println('The animal takes the food gratefully, and runs off into the distance. Despite the danger, you are glad you did not have to kill it.');
                 enterRoom('valley')
@@ -215,7 +212,6 @@ const darlene = {
               }else{
                 println(`You cup your hands but this isn't a reliable container.`);
               }
-              console.log(theFlask)
             },
             onUse: function () {
                
@@ -593,11 +589,11 @@ const darlene = {
   ],
 },
 
-{
-  id: 'desertDeath',
-  name: 'Desert',
-  desc: `You feel your parched mouth try to etch a cry to Darlene, but nothing comes out. \nEverything turns red, then black, as her voice fades away.`,
-},
+// {
+//   id: 'desertDeath',
+//   name: 'Desert',
+//   desc: `You feel your parched mouth try to etch a cry to Darlene, but nothing comes out. \nEverything turns red, then black, as her voice fades away.`,
+// },
 
 
 // The Mine (endgame)
@@ -656,12 +652,123 @@ const darlene = {
 
     ],
   };
-  
-  // window.onload = function() {
-  //   var myAudio = document.getElementById("ost");
-  //   if (myAudio.duration > 0 && !myAudio.paused) {
-    
-  //   }else{
-  //     myAudio.play();
-  //   }
-  // };
+
+  var helper = {
+    aniTimeout:0,
+    aniCallback:0,
+    anim: (elements, classAni, aniDelay, callback, counter) => {
+      if(typeof (counter) === 'undefined'){
+        var aniCounter = 0;
+        var delayCounter = 0;
+        if (typeof (elements.length) === 'undefined') {
+          elements.length = 1;
+          elementsTemp = elements;
+          elements = [];
+          elements[0] = elementsTemp;
+        }
+      }else{
+        aniCounter = counter[0];
+        delayCounter = counter[1];
+        aniCounter++;
+        delayCounter++;
+      }
+      if(typeof(elements[aniCounter]) !== 'undefined'){
+        if (!elements[aniCounter].classList.contains(classAni)) {
+          helper.animTimeout(elements, aniDelay, classAni, callback, aniCounter, delayCounter);
+        } 
+      }else{
+        setTimeout(callback, aniDelay[delayCounter]*1000)
+      }
+    },
+    animTimeout: (loopElements, loopDelay, classAni, callback, aniCounter, delayCounter) => {
+      helper.aniCallback = {
+        loopElements:loopElements,
+        classAni:classAni,
+        loopDelay:loopDelay,
+        counter: [aniCounter, delayCounter],
+        run: () => {
+          if(typeof(loopElements[aniCounter]) !== 'undefined'){
+            helper.anim(loopElements, classAni, loopDelay, callback, [aniCounter, delayCounter]);
+          }else{
+            setTimeout(callback, loopDelay[delayCounter]*1000)
+          }
+        }
+      }
+      aniTimeout = setTimeout(() => {
+        loopElements[aniCounter].className = loopElements[aniCounter].className + ' ' + classAni;
+        helper.aniCallback.run();
+      }, loopDelay[delayCounter]*1000); 
+      
+    },
+    animSkip: () =>{
+      clearTimeout(aniTimeout);
+      // we need to skip all animations before this one here 
+      for(var i = helper.aniCallback.counter[0]; i > 0; i--){
+        console.log(helper.aniCallback.loopElements[i-1]);
+        helper.aniCallback.loopElements[i].classList.add(helper.aniCallback.classAni+'Skip');
+      }
+      helper.aniCallback.loopElements[helper.aniCallback.counter[0]].classList.add(helper.aniCallback.classAni+'Skip');
+      helper.aniCallback.run();
+    },
+    die:(deathMessage) => {
+      if(typeof(deathMessage) === "undefined" || deathMessage.length === 0){
+        deathMessage = 'Yep you&apos;re definitely dead, I checked...';
+      }
+      darlene = {};
+      document.getElementById('deathScree').getElementsByTagName('p')[0].innerHTML = deathMessage;
+      document.getElementById('deathScree').className='';
+      document.getElementById('btnRestart').addEventListener('click', function(event) {
+        window.document.location = window.document.location
+      });
+    },
+    toggleAudio: (state) => {
+      if(state){
+          document.getElementById("audioOn").classList = ""
+          document.getElementById("audioOff").classList.add("hide")
+          document.getElementById("ost").play();
+          document.getElementById("ost").volume = 0.3;
+      }else{
+          document.getElementById("audioOn").classList.add("hide")
+          document.getElementById("audioOff").classList = ""
+          document.getElementById("ost").pause();
+      }
+    }
+  }
+
+
+var theBody = document.getElementById('theBody');
+var firstEnter = 0
+theBody.addEventListener('keyup', function(event) {
+  if (event.keyCode === 13) {
+    firstEnter++
+    if(firstEnter == 1){
+      event.preventDefault();
+      helper.toggleAudio(true);
+      startingAnim()
+    }else{
+      if(typeof(disk) === "undefined"){
+        //helper.animSkip();
+      }
+    }
+  }
+});
+
+document.getElementById("audioOff").addEventListener("click", function(){
+  helper.toggleAudio(true);
+})
+document.getElementById("audioOn").addEventListener("click", function(){
+  helper.toggleAudio(false);
+})
+
+
+function startingAnim(){
+  helper.anim(document.getElementById('titleWrapper'), 'fadeOut', [0,5], () =>{
+    document.getElementById('titleWrapper').classList.add('hide');
+    document.getElementById('introText').classList.add('show');
+    helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [1,3,3,3,3,5], () =>{
+      document.getElementsByClassName('input')[0].className = 'input';
+      // helper.anim(document.getElementsByClassName('input'), 'fadeIn')
+      loadDisk(darlene);
+    })
+  })
+}
