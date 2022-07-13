@@ -703,7 +703,7 @@ const darlene = {
           helper.animTimeout(elements, aniDelay, classAni, callback, aniCounter, delayCounter);
         } 
       }else{
-        setTimeout(callback, aniDelay[delayCounter]*1000)
+        setTimeout(callback, aniDelay[delayCounter]*1000);
       }
     },
     animTimeout: (loopElements, loopDelay, classAni, callback, aniCounter, delayCounter) => {
@@ -715,6 +715,9 @@ const darlene = {
         run: () => {
           if(typeof(loopElements[aniCounter]) !== 'undefined'){
             helper.anim(loopElements, classAni, loopDelay, callback, [aniCounter, delayCounter]);
+            setTimeout(() => {
+              window.scrollTo(0, document.body.scrollHeight);
+            }, 1000)
           }else{
             setTimeout(callback, loopDelay[delayCounter]*1000)
           }
@@ -774,15 +777,36 @@ const darlene = {
       }
     },
     slideUp: (callback) => {
+      document.getElementById("darleneTxt").classList.add('start')
+      document.getElementById("darleneTxt").classList.add('loopEnd')
+      document.getElementById("darleneTxt").classList.remove('loop')
       for(var i = 0; i < document.getElementById("titleWrapper").getElementsByTagName('img').length; i++){
         document.getElementById("titleWrapper").getElementsByTagName('img')[i].classList.add('transition');
       }
       document.getElementById("imageTitleWrapper").classList.add('overlaySlideUp')
+      document.getElementById("allBirdContainer").classList.add('transition')
       document.getElementById("txtTitleWrapper").classList.add('transition')
+      
       callback();
     },
-    runEnding: (dir, track) => {
+    runEnding: (text) => {
+      var str = '';
+      var loopTime = [];
+      for(var i = 0; i < text.length; i++){
+        if(i === 0){
+          str += `<p class='h1'>${text[i]}</p>`;
+        }else{
+          str += `<p>${text[i]}</p>`;
+        }
+        loopTime.push(3); 
+      }
 
+      document.getElementById("endText").innerHTML = str;
+      document.getElementById("endText").classList.add('show');
+      
+      helper.anim(document.getElementById('endText').getElementsByTagName('p'), 'fadeIn', loopTime, () =>{
+          
+      });
     }
   }
 
@@ -814,7 +838,8 @@ document.getElementById("audioOn").addEventListener("click", function(){
 
 function startingAnim(){
   helper.slideUp(() => {
-    helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [1,3,3,3,3,5], () =>{
+    console.log("something");
+    helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [12,3,3,3,3,3], () =>{
       document.getElementsByClassName('input')[0].className = 'input';
       // helper.anim(document.getElementsByClassName('input'), 'fadeIn')
       loadDisk(darlene);
