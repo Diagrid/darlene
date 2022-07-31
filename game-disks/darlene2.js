@@ -13,12 +13,12 @@ const darlene = {
         id: 'home', // Unique identifier for this room. Entering a room will set the disk's roomId to this.
         name: 'Your home', // Displayed each time the player enters the room.
         desc: `You are in front of your house.`, // Displayed when the player first enters the room.
-        firstDesc:`To the !!North!! is your farm, to the !!East!! is the path through the valley, and to the West is the pass over the mountains.`,
+        firstDesc:`To the $$North$$ is your farm, to the $$East$$ is the path through the valley, and to the $$West$$ is the pass over the mountains.`,
         items: [
           {
-            name: ['Flask', 'bottle'],
+            name: ['Flask', 'bottle', 'water'],
             desc: 'It is shiny.', // Displayed when the player looks at the item.
-            longName: "On the floor ahead of you lies your empty flask.",
+            longName: "On the floor ahead of you lies your empty !!flask.!!",
             isTakeable: true,
             isFull: false,
             onUse: function () {
@@ -61,13 +61,14 @@ const darlene = {
           {
             name: ['Jerky',],
             desc: 'Tasty tasty jerky', // Displayed when the player looks at the item.
-            longName: "Just one piece of food is ready to eat - a piece of jerky hanging in front of you.",
+            longName: "Just one piece of food is ready to eat - a piece of !!jerky!! hanging in front of you.",
             isTakeable: true,
             onUse: () => {
               if(disk.roomId === 'valleyWolf'){
                 println('The animal takes the food gratefully, and runs off into the distance. Despite the danger, you are glad you did not have to kill it.');
                 enterRoom('valley')
-              }
+                clearTimeout(wolfDeathTimer)
+              } else ('This is no time for a meal.')
             },
           }
         ],
@@ -86,7 +87,7 @@ const darlene = {
         id: 'valley',
         name: 'Valley',
         desc: `A thin, winding valley reaches before you. `,
-        firstDesc: `The twisting rockwalls around you prevent you from seeing more than 50ft ahead, but it is clear that there are paths to the North, East and South. \n You notice tracks tramped around in circles. Darlene has been here.`,
+        firstDesc: `The twisting rockwalls around you prevent you from seeing more than 50ft ahead, but it is clear that there are paths to the $$North$$, $$East$$ and $$South$$. \n You notice tracks tramped around in circles. Darlene has been here.`,
         onEnter:function(data){
           var hut = getRoom('hut');
           var valleyWolf = getRoom('valleyWolf');
@@ -123,7 +124,7 @@ const darlene = {
           {
             name: ['gun', 'rifle', 'henry', 'Henry Western', 'Western', 'shotgun',],
             desc: 'It has Henry Western emblazoned on the side.', // Displayed when the player looks at the item.
-            longName: `There is a rusty shotgun atop it, with Henry Western emblazoned upon its strap.`,
+            longName: `There is a rusty !!shotgun!! atop it, with Henry Western emblazoned upon its strap.`,
             isTakeable: true,
             loaded:1,
             onUse: function () {
@@ -131,16 +132,25 @@ const darlene = {
               if (disk.roomId === 'valleyWolf') {
                 println ('You fire your only shot at the poor beast and miss. It scatters into the distance. You’re unlikely to see him again, but you feel restless with him on the loose regardless.')
                 enterRoom ('valley')
+                clearTimeout(wolfDeathTimer)
               }else if(disk.roomId === 'mine'){
                 if(gun.loaded == 1){
                   println ('You fire a shot into the bear. Mid run, the beast stumbles. Turning away from them both, it cowers away into the storm, leaving you and your wife be.')
                   println ('Darlene looks at you with a gleam in her eye.')
                   println ('She’s safe now, and she has something to tell you...')
-                  helper.runEnding();
+                  println('-')
+                  println('Nevada, 1874')
+                  println('It’s a boy.')
+                  println('You hold him up with glee.')
+                  println('You and Darlene watch your newborn open his eyes for the very first time.')
+                  println('You hold him up with glee.')
+                  println('He would live a good life now. The oil had made you rich beyond your wildest dreams, and you had all you could ask for.')
+                  println('Still, you would return to your home in the desert, and continue the dream you and Darlene once held.')
+                  clearTimeout(bearDeathTimer)
                 }else{
                   println ('The gun is not loaded. The bear presses towards Darlene at pace.');
-                  println ('You can fight him barehanded, or flee.');
-                  helper.runEnding();
+                  // println ('You can fight him barehanded, or flee.');
+                  helper.message();
                 }
                 
               }
@@ -154,7 +164,7 @@ const darlene = {
           {
             name: 'rope',
             desc: `It looks strong enough to climb with.`,
-            longName: `A rope hangs on a hook underneath.`,
+            longName: `A !!rope!! hangs on a hook underneath.`,
             isTakeable: true, // Allows the player to take the item.
             onUse: () => {
               // Remove the block on the room's only exit.
@@ -184,17 +194,40 @@ const darlene = {
         firstDesc: ``,
         exits: [
           {
+            dir: 'north',
+            id: 'wolfDeath',
+          },
+          {
+            dir: 'east',
+            id: 'wolfDeath',
+          },
+          {
             dir: 'south',
-            id: 'valleywithwolf',
+            id: 'wolfDeath',
+          },
+          {
+            dir: 'west',
+            id: 'wolfDeath',
           }
         ],
+        onEnter: () => {
+          wolfDeathTimer = setTimeout(function(){
+            helper.message("You waited too long to act. The wolf’s sharp teeth pierce through your neck, and the world fades to black as your agony dissipates.");
+          }, 10000);
+        }
       },
-
+      
+      {
+        id: 'wolfDeath',
+        onEnter: () => {
+          helper.message("As you try to run away, the wolf’s sharp teeth pierce through your neck, and the world fades to black as your agony dissipates.");
+        }
+      },
       {
         id: 'deadEnd',
         name: 'Dead end',
         desc: `At the other end of the valley, a dead end faces you.`,
-        firstDesc: `It doesn’t appear as though Darlene has been this way.\nYou can only go West, the way you came.`,
+        firstDesc: `It doesn’t appear as though Darlene has been this way.\nYou can only go $$West$$, the way you came.`,
         exits: [
           {
             dir: 'west',
@@ -212,7 +245,7 @@ const darlene = {
           {
             name: ['Water'],
             desc: 'Very refreshing.', // Displayed when the player looks at the item.
-            longName: "The water looks delicious.",
+            longName: "The !!water!! looks delicious.",
             isTakeable: false,
             onTake: function () {
               var theFlask = getItemInInventory('flask')
@@ -247,7 +280,7 @@ const darlene = {
         id: 'mountainPass',
         name: 'Mountain Pass',
         desc: `A thin road climbs up into the mountains, following up alongside and above the valley.`,
-        firstDesc: `Darlene has been here.\nAs you rise up the mountain, the path splits to the North, West and South, and it is not clear where she went.\nYou can take any path, or return down to your home to the East.`,
+        firstDesc: `Darlene has been here.\nAs you rise up the mountain, the path splits to the $$North$$, $$West$$ and $$South$$, and it is not clear where she went.\nYou can take any path, or return down to your home to the $$East$$.`,
         exits: [
           {
             dir: 'north',
@@ -319,7 +352,7 @@ const darlene = {
         id: 'topOfMountain',
         name: 'The Summit',
         desc: `The view reaches on forever, bringing you back some small semblance of the dream you and Darlene came here for.  `,
-        firstDesc: `To the South is the path back down, to the East the edge over your valley, to the West a cave, and another edge to the North.`,
+        firstDesc: `To the $$South$$ is the path back down, to the $$East$$ the edge over your valley, to the $$West$$ a cave, and another edge to the $$North$$.`,
         exits: [
           {
             dir: 'north',
@@ -411,7 +444,7 @@ const darlene = {
         id: 'desert',
         name: 'Desert',
         desc: `You are in a large desert.`,
-        firstDesc: `A storm is raging, blowing sands impeding your vision.\nYou can go North, East, West, or up the rope Southwards.`,
+        firstDesc: `A storm is raging, blowing sands impeding your vision.\nYou can go $$North$$, $$East$$, $$West$$, or up the rope Southwards.`,
         exits: [
           {
             dir: 'north',
@@ -438,7 +471,7 @@ const darlene = {
         id: 'nothing',
         name: 'Desert',
         desc: `The sandstorm rages.`,
-        firstDesc: `High rocks face you to the South and East. You can go West, or North.`,
+        firstDesc: `High rocks face you to the South and East. You can go $$West$$, or $$North$$.`,
         exits: [
           {
             dir: 'north',
@@ -455,7 +488,7 @@ const darlene = {
         id: 'nothing2',
         name: 'Desert',
         desc: `You have to raise your arm to prevent the wind from blowing sand into your face.`,
-        firstDesc: `To the South and West, there is nothing but jagged rock, blocking your path. You can go East, or North.`,
+        firstDesc: `To the $$South$$ and $$West$$, there is nothing but jagged rock, blocking your path. You can go $$East$$, or $$North$$.`,
         exits: [
           {
             dir: 'north',
@@ -500,7 +533,7 @@ const darlene = {
   id: 'nothing4',
   name: 'Desert',
   desc: `You can hear Darlene’s voice faintly.\nYou shout, but you hear no return.`,
-  firstDesc: `A rockwall faces to the West. You can either go North, East, or South.`,
+  firstDesc: `A rockwall faces to the $$West$$. You can either go $$North$$, $$East$$, or $$South$$.`,
   exits: [
     {
       dir: 'north',
@@ -521,7 +554,7 @@ const darlene = {
   id: 'nothing3',
   name: 'Desert',
   desc: `You can hear your wife’s voice, but you can’t make out what she is saying.`,
-  firstDesc: `The path is blocked to the East, but you can head North, West or South.`,
+  firstDesc: `The path is blocked to the $$East$$, but you can head $$North$$, $$West$$ or $$outh$$.`,
   exits: [
     {
       dir: 'north',
@@ -569,7 +602,7 @@ const darlene = {
   id: 'nothing6',
   name: 'Desert',
   desc: `You can only just make out her voice, muffled by the storm.`,
-  firstDesc: `Your path is blocked to the North and West, but you can get East or South.`,
+  firstDesc: `Your path is blocked to the $$Nort$$h and $$West$$, but you can get $$East$$ or $$South$$.`,
   exits: [
     {
       dir: 'east',
@@ -590,7 +623,7 @@ const darlene = {
   id: 'nothing5',
   name: 'Desert',
   desc: `Her voice is quiet, and she cannot hear you. The storm rages. `,
-  firstDesc: `There is a rockwall to the North and East, but you can still head South or West.`,
+  firstDesc: `There is a rockwall to the $$North$$ and $$East$$, but you can still head $$South$$ or $$West$$.`,
   exits: [
     {
       dir: 'south',
@@ -616,27 +649,51 @@ const darlene = {
   id: 'mine',
   name: 'Abandoned Mine',
   desc: `Darlene’s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
-  firstDesc: `There is a rockwall to the North and East, but you can still head South or West.`,
   exits: [
     {
       dir: 'north',
       id: 'mineDeath',
     },
+    {
+      dir: 'east',
+      id: 'mineDeath',
+    },
+    {
+      dir: 'south',
+      id: 'mineDeath',
+    },
+    {
+      dir: 'west',
+      id: 'mineDeath',
+    }
   ],
+  onEnter: () => {
+    bearDeathTimer = setTimeout(function(){
+      helper.message("You waited too long to act. The bear reaches Darlene, and begins swiping at her furiously - barely missing her cowering body.\nHearing your screams, it instead runs towards you at pace.\nIn a vicious tussle, you manage to twist the bear's neck, but not before being fatally wounded by a brutal swipe of his paws.\nThe world fades as Darlene screams your name, over, and over.");
+    }, 20000);
+  }
 },
 
 {
   id: 'mineDeath',
-  name: 'Abandoned Mine',
-  desc: `Darlene’s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
-  firstDesc: `There is a rockwall to the North and East, but you can still head South or West.`,
-  exits: [
-    {
-      dir: 'north',
-      id: 'mineDeath',
-    },
-  ],
+  onEnter: () => {
+    helper.message("You run away, the piercing sound of your wife’s screams filling your ears until it slowly fades into the distance.\n-\nNevada, later that month\nYou make sure the knot is tight, then raise yourself onto the chair in the centre of the cabin.\nHer voice has never left your ears, and there is only one way you believe you can silence it.\nYou kick the chair out from beneath you, and the noose clasps around your neck.\nIt’s over.\nYou died.");
+  }
 },
+
+
+// {
+//   id: 'mineDeath',
+//   name: 'Abandoned Mine',
+//   desc: `Darlene’s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
+//   firstDesc: `There is a rockwall to the North and East, but you can still head South or West.`,
+//   exits: [
+//     {
+//       dir: 'north',
+//       id: 'mineDeath',
+//     },
+//   ],
+// },
 
 
 // room template
@@ -739,15 +796,23 @@ const darlene = {
       helper.aniCallback.loopElements[helper.aniCallback.counter[0]].classList.add(helper.aniCallback.classAni+'Skip');
       helper.aniCallback.run();
     },
-    die:(deathMessage) => {
+    message:(deathMessage, deathTitle, deathBtn) => {
       if(typeof(deathMessage) === "undefined" || deathMessage.length === 0){
         deathMessage = 'Yep you&apos;re definitely dead, I checked...';
       }
+      if(typeof(deathTitle) === "undefined" || deathTitle.length === 0){
+        deathTitle = 'You\'re Dead...';
+      }
+      if(typeof(deathBtn) === "undefined" || deathBtn.length === 0){
+        deathBtn = 'Restart?';
+      }
       // darlene = {};
-      helper.fadeAudio(false, "ost");
-      helper.toggleAudio(true, "deathEnd");
-      document.getElementById('deathScree').getElementsByTagName('p')[0].innerHTML = deathMessage;
-      document.getElementById('deathScree').className='';
+      // helper.fadeAudio(false, "ost");
+      // helper.toggleAudio(true, "deathEnd");
+      document.getElementById('deathScreen').getElementsByTagName('button')[0].innerHTML = deathBtn;
+      document.getElementById('deathScreen').getElementsByTagName('h1')[0].innerHTML = deathTitle;
+      document.getElementById('deathScreen').getElementsByTagName('p')[0].innerHTML = deathMessage;
+      document.getElementById('deathScreen').className='';
       document.getElementById('btnRestart').addEventListener('click', function(event) {
         window.document.location = window.document.location
       });
@@ -838,10 +903,11 @@ document.getElementById("audioOn").addEventListener("click", function(){
 
 function startingAnim(){
   helper.slideUp(() => {
-    console.log("something");
-    helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [12,3,3,3,3,3], () =>{
-      document.getElementsByClassName('input')[0].className = 'input';
+    // [12,3,3,3,3,3]
+    helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [8,7,5,5,5,8], () =>{
       // helper.anim(document.getElementsByClassName('input'), 'fadeIn')
+
+      document.getElementsByClassName('input')[0].className = 'input';
       loadDisk(darlene);
     })
   });

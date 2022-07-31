@@ -13,10 +13,14 @@
     letter-spacing: 0.1rem;
     margin: 0;
     overflow-x: hidden;
+    cursor: none; 
+
   }
+
+
   
   div{
-    font-size: 1em;
+    font-size: 2vh;
   }
 
   /* scrollbar */
@@ -40,7 +44,7 @@
 
   h1, .h1, .room-name{
     font-family:  sans-serif;
-    font-size: 3em;
+    font-size: 5vh;
     font-weight: 900;
   }
   
@@ -55,7 +59,7 @@
   }
   
   .room-name {
-    margin-top: 15vh;
+    margin-top: 100vh;
     margin-bottom: 4vh !important;
   }
   
@@ -80,7 +84,7 @@
 
   div.itemHeader{
     margin: 0;
-    font-size: 1.4em;
+    font-size: 1.em;
     font-weight: 900;
   }
 
@@ -88,8 +92,7 @@
     margin: 0;
   }
 
-  div.itemList.fadeIn:before {
-    content: '-';
+  div.itemList.adeIn:before {
     margin-right: 10px;
     font-weight: 900;
     color: #63564d;
@@ -115,6 +118,7 @@
     bottom: 0.175vh;
     margin-left: .5vw;
     font-style: oblique;
+    margin-top: 5vh;
   }
   
   .ml-2 {
@@ -138,6 +142,7 @@
   .user{
     font-style: oblique;
     font-size: 1.2em;
+    margin-top: 5vh;
   }
   
 
@@ -173,73 +178,73 @@
   }
   
   #txtTitleWrapper.transition{
-    -webkit-animation: fadeOut linear 2s 1 normal forwards;
-     -moz-animation: fadeOut linear 2s 1 normal forwards;
-      -ms-animation: fadeOut linear 2s 1 normal forwards; 
-     -o-animation: fadeOut linear 2s 1 normal forwards;
-        animation: fadeOut linear 2s 1 normal forwards;
+    -webkit-animation: fadeOut linear 1s 1 normal forwards;
+     -moz-animation: fadeOut linear 1s 1 normal forwards;
+      -ms-animation: fadeOut linear 1s 1 normal forwards; 
+     -o-animation: fadeOut linear 1s 1 normal forwards;
+        animation: fadeOut linear 1s 1 normal forwards;
   }
 
   #darleneWord{
-    -webkit-animation: textSmoke ease-in 5s 1 normal infinite;
-     -moz-animation: textSmoke ease-in 5s 1 normal infinite;
-      -ms-animation: textSmoke ease-in 5s 1 normal infinite;
-     -o-animation: textSmoke ease-in 5s 1 normal infinite;
-        animation: textSmoke ease-in 5s 1 normal infinite;
+    -webkit-animation: textSmoke ease-in 2s 1 normal infinite;
+     -moz-animation: textSmoke ease-in 2s 1 normal infinite;
+      -ms-animation: textSmoke ease-in 2s 1 normal infinite;
+     -o-animation: textSmoke ease-in 2s 1 normal infinite;
+        animation: textSmoke ease-in 2s 1 normal infinite;
   }
 
   #imageTitleWrapper.overlaySlideUp{
-    -webkit-animation: overlaySlideUp ease-in 5s 3s 1 normal forwards;
-     -moz-animation: overlaySlideUp ease-in 5s 3s 1 normal forwards;
-      -ms-animation: overlaySlideUp ease-in 5s 3s 1 normal forwards;
-     -o-animation: overlaySlideUp ease-in 5s 3s 1 normal forwards;
-        animation: overlaySlideUp ease-in 5s 3s 1 normal forwards;
+    -webkit-animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
+     -moz-animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
+      -ms-animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
+     -o-animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
+        animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
   }
 
   #darleneWord.transition{
-    -webkit-animation: fadeOut linear 2s 3s 1 normal forwards;
-     -moz-animation: fadeOut linear 2s 3s 1 normal forwards;
-      -ms-animation: fadeOut linear 2s 3s 1 normal forwards; 
-     -o-animation: fadeOut linear 2s 3s 1 normal forwards;
-        animation: fadeOut linear 2s 3s 1 normal forwards;
+    -webkit-animation: fadeOut linear 1s 3s 1 normal forwards;
+     -moz-animation: fadeOut linear 1s 3s 1 normal forwards;
+      -ms-animation: fadeOut linear 1s 3s 1 normal forwards; 
+     -o-animation: fadeOut linear 1s 3s 1 normal forwards;
+        animation: fadeOut linear 1s 3s 1 normal forwards;
   }
 
   #darleneHouse.transition{
+    -webkit-animation: slideUp ease-in 3s 3s 1 normal forwards;
+     -moz-animation: slideUp ease-in 3s 3s 1 normal forwards;
+      -ms-animation: slideUp ease-in 3s 3s 1 normal forwards;
+     -o-animation: slideUp ease-in 3s 3s 1 normal forwards;
+        animation: slideUp ease-in 3s 3s 1 normal forwards;
+  }
+
+  #darleneHill.transition{
     -webkit-animation: slideUp ease-in 5s 3s 1 normal forwards;
      -moz-animation: slideUp ease-in 5s 3s 1 normal forwards;
       -ms-animation: slideUp ease-in 5s 3s 1 normal forwards;
      -o-animation: slideUp ease-in 5s 3s 1 normal forwards;
         animation: slideUp ease-in 5s 3s 1 normal forwards;
   }
-
-  #darleneHill.transition{
+  #allBirdContainer.transition{
+    -webkit-animation: slideUpBird ease-in 3s 3s 1 normal forwards;
+     -moz-animation: slideUpBird ease-in 3s 3s 1 normal forwards;
+      -ms-animation: slideUpBird ease-in 3s 3s 1 normal forwards;
+     -o-animation: slideUpBird ease-in 3s 3s 1 normal forwards;
+        animation: slideUpBird ease-in 3s 3s 1 normal forwards;
+  }
+  #darleneMt.transition{
     -webkit-animation: slideUp ease-in 7s 3s 1 normal forwards;
      -moz-animation: slideUp ease-in 7s 3s 1 normal forwards;
       -ms-animation: slideUp ease-in 7s 3s 1 normal forwards;
      -o-animation: slideUp ease-in 7s 3s 1 normal forwards;
         animation: slideUp ease-in 7s 3s 1 normal forwards;
   }
-  #allBirdContainer.transition{
-    -webkit-animation: slideUpBird ease-in 5s 3s 1 normal forwards;
-     -moz-animation: slideUpBird ease-in 5s 3s 1 normal forwards;
-      -ms-animation: slideUpBird ease-in 5s 3s 1 normal forwards;
-     -o-animation: slideUpBird ease-in 5s 3s 1 normal forwards;
-        animation: slideUpBird ease-in 5s 3s 1 normal forwards;
-  }
-  #darleneMt.transition{
-    -webkit-animation: slideUp ease-in 9s 3s 1 normal forwards;
-     -moz-animation: slideUp ease-in 9s 3s 1 normal forwards;
-      -ms-animation: slideUp ease-in 9s 3s 1 normal forwards;
-     -o-animation: slideUp ease-in 9s 3s 1 normal forwards;
-        animation: slideUp ease-in 9s 3s 1 normal forwards;
-  }
 
   #darleneSky.transition{
-    -webkit-animation: slideUp ease-in 12s 3s 1 normal forwards;
-     -moz-animation: slideUp ease-in 12s 3s 1 normal forwards;
-      -ms-animation: slideUp ease-in 12s 3s 1 normal forwards;
-     -o-animation: slideUp ease-in 12s 3s 1 normal forwards;
-        animation: slideUp ease-in 12s 3s 1 normal forwards;
+    -webkit-animation: slideUp ease-in 10s 3s 1 normal forwards;
+     -moz-animation: slideUp ease-in 10s 3s 1 normal forwards;
+      -ms-animation: slideUp ease-in 10s 3s 1 normal forwards;
+     -o-animation: slideUp ease-in 10s 3s 1 normal forwards;
+        animation: slideUp ease-in 10s 3s 1 normal forwards;
   }
 
   
@@ -264,7 +269,7 @@
     position: fixed;
     bottom: 5vh;
     width: 100vw;
-    font-size: 1.2em;
+    font-size: 2vh;
     z-index: 6000;
   }
 
@@ -274,22 +279,27 @@
     padding: 0;
     font-size: 2vh;
     font-weight: normal;
+    
   }
 
+  #txtTitleWrapper h3 span{
+    color: #fff7f0;
+  }
 
 
   /* intro text */
   #introText, #endText{
-      font-size: 1.1em;
+      font-size: 2vh;
       line-height: 1.5;
-      padding: 0 10%;
+      padding: 2vw 2vw 0 2vw;
+      margin: 0 10%;
       /* display: none; */
       z-index: 7000;
       position: relative;
   }
 
   #introText p, #endText p{
-      margin: 80px 0 80px 0;
+      margin: 40px 0 80px 0;
       opacity: 0;
   }
 
@@ -321,7 +331,7 @@
   }
 
   /* dead */
-  #deathScree{
+  #deathScreen{
     position: fixed;
     background: #272425;
     top: 0;
@@ -330,10 +340,10 @@
     bottom: 0;
     color: #ebd5bd;
     font-family: sans-serif;
-    z-index: 1000;
+    z-index: 10000;
   }
 
-  #deathScree > div {
+  #deathScreen > div {
     position: relative;
     text-align: center;
     left: 50%;
@@ -346,13 +356,21 @@
     line-height: 2;
   }
 
-  #deathScree .btn{
+  #deathScreen .btn{
     margin: 20px 0 0 0;
   }
 
   .keyWord{
-    text-transform: uppercase;
+    color: #fff7f0;
     font-weight: 900;
+    font-size: 3vh;
+  }
+
+  .direction{
+    /* font-style: italic; */
+    font-weight: 900;
+    font-size: 2.5vh;
+    text-transform: lowercase;
   }
 
   /* btn */
@@ -666,7 +684,7 @@
     transform:translate(-50%,-48%);
     z-index: 3500;
     font-family: 'Great Vibes', sans-serif; 
-    font-size: 3.4vh;
+    font-size: 4.5vh;
   }
   .darleneTxt ul {
     margin:0;
@@ -689,7 +707,7 @@
   }
 
   .darleneTxt.loop ul li {
-    animation: smoke 2s cubic-bezier(0.66, 0.03, 0.6, 0.72) infinite;
+    animation: smoke 1s cubic-bezier(0.66, 0.03, 0.6, 0.72) infinite;
   }
 
   .darleneTxt.loopEnd ul li {
@@ -697,7 +715,7 @@
   }
 
   .darleneTxt.start ul li{
-    animation: smokeFade 2s linear forwards;
+    animation: smokeFade 1s linear forwards;
   }
 
   @keyframes smokeFade {
@@ -940,9 +958,10 @@
   position: absolute;
   width: 100vw;
   top: 0;
+  bottom: 0;
   background-color: #272425;
   color: #c5a78f;
-  z-index: 9000;
+  z-index: 50000;
   display: none;
 }
 

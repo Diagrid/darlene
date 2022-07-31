@@ -493,7 +493,7 @@ let items = () => {
     println(`There's nothing to pick up.`);
     return;
   }else if(items.length && !room.visits){
-    println(`You take a look around`, `itemHeader`);
+    println(`You take a look around.`, `output`);
   }
   
   
@@ -723,6 +723,7 @@ let println = (line, className) => {
     str = addStyleTags(str, '*', 'i', '');
     str = addStyleTags(str, '~~', 'strike', '');
     str = addStyleTags(str, '!!', 'span', 'keyWord');
+    str = addStyleTags(str, '$$', 'span', 'direction');
   }
 
   // maintain line breaks
