@@ -901,16 +901,37 @@ document.getElementById("audioOn").addEventListener("click", function(){
 })
 
 
+function pressToContinue() {
+  loadDisk(darlene)
+}
+
 function startingAnim(){
   helper.slideUp(() => {
     // [12,3,3,3,3,3]
     helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [8,7,5,5,5,8], () =>{
       // helper.anim(document.getElementsByClassName('input'), 'fadeIn')
 
-      document.getElementsByClassName('input')[0].className = 'input';
-      loadDisk(darlene);
+      //document.getElementsByClassName('input')[0].className = 'input';
+      //loadDisk(darlene);
+
+      
+      //Press to continue button
+      let btn = document.createElement("button");
+      btn.innerHTML = "Press to continue";
+      btn.id = "continue";
+      document.getElementById("introText").appendChild(btn);
+      btn.addEventListener('click', event => {
+        loadDisk(darlene);
+        btn.remove;
+        document.getElementsByClassName('input')[0].className = 'input';
+      });
     })
   });
+
+
+//
+
+
   // helper.anim(document.getElementById('titleWrapper'), 'fadeOut', [0,5], () =>{
   //   document.getElementById('titleWrapper').classList.add('hide');
   //   document.getElementById('introText').classList.add('show');

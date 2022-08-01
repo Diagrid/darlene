@@ -13,7 +13,7 @@
     letter-spacing: 0.1rem;
     margin: 0;
     overflow-x: hidden;
-    cursor: none; 
+    /* cursor: none;  */
 
   }
 
@@ -951,6 +951,18 @@
       transform: translateY(0vh) translateX(110vw) scale(0.45);
     }
   }
+
+/* Continue button (after intro) */
+
+#continue {
+  padding-left: 40%;
+  padding-right: 40%;
+  font-size: 7vh;
+
+  background: #ebd5bd;
+  color: #272425;
+  font-family: sans-serif;
+}
 
 
 /* End Game */
