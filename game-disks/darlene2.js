@@ -213,7 +213,7 @@ const darlene = {
         onEnter: () => {
           wolfDeathTimer = setTimeout(function(){
             helper.message("You waited too long to act. The wolf’s sharp teeth pierce through your neck, and the world fades to black as your agony dissipates.");
-          }, 10000);
+          }, 100000);
         }
       },
       
@@ -670,7 +670,7 @@ const darlene = {
   onEnter: () => {
     bearDeathTimer = setTimeout(function(){
       helper.message("You waited too long to act. The bear reaches Darlene, and begins swiping at her furiously - barely missing her cowering body.\nHearing your screams, it instead runs towards you at pace.\nIn a vicious tussle, you manage to twist the bear's neck, but not before being fatally wounded by a brutal swipe of his paws.\nThe world fades as Darlene screams your name, over, and over.");
-    }, 20000);
+    }, 200000);
   }
 },
 
