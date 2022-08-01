@@ -123,6 +123,7 @@
   
   .ml-2 {
     margin-left: 2vw;
+    margin-top: 5vh;
     color:#63564d;
     height: 5vh;
     font-style: oblique;
@@ -952,18 +953,7 @@
     }
   }
 
-/* Continue button (after intro)
-
-#continue {
-  padding-left: 40%;
-  padding-right: 40%;
-  font-size: 7vh;
-
-  background: #ebd5bd;
-  color: #272425;
-  font-family: sans-serif;
-} */
-
+/* Continue button (after intro) */
 
 #continue {
     color: #ebd5bd;
