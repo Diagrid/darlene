@@ -952,7 +952,7 @@
     }
   }
 
-/* Continue button (after intro) */
+/* Continue button (after intro)
 
 #continue {
   padding-left: 40%;
@@ -962,7 +962,26 @@
   background: #ebd5bd;
   color: #272425;
   font-family: sans-serif;
-}
+} */
+
+
+#continue {
+    color: #ebd5bd;
+    background: #272425;
+    border: 4px solid #ebd5bd;
+    font-size: 1.5em;
+    padding: 10px 25px;
+    font-weight: 900;
+    display: inline-block;
+    text-decoration: none;
+    font-family: sans-serif;
+    min-width: 120px;
+  }
+
+  #continue:hover, #continue:active {
+  color:#272425;
+  background:#ebd5bd;
+  }
 
 
 /* End Game */
