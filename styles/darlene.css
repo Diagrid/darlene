@@ -714,7 +714,7 @@
   }
 
   .darleneTxt.loop ul li {
-    animation: smoke 1s cubic-bezier(0.66, 0.03, 0.6, 0.72) infinite;
+    animation: smoke 3s cubic-bezier(0.66, 0.03, 0.6, 0.72) infinite;
   }
 
   .darleneTxt.loopEnd ul li {
@@ -722,7 +722,7 @@
   }
 
   .darleneTxt.start ul li{
-    animation: smokeFade 1s linear forwards;
+    animation: smokeFade 3s linear forwards;
   }
 
   @keyframes smokeFade {
