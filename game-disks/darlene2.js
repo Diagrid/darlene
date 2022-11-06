@@ -140,20 +140,20 @@ const darlene = {
               }else if(disk.roomId === 'mine'){
                 if(gun.loaded == 1){
                   helper.printlnStack([
-                    '\n - \n ',
-                    'You fire a shot into the bear. Mid run, the beast stumbles. Turning away from them both, it cowers away into the storm, leaving you and your wife be.',
-                    'Darlene looks at you with a gleam in her eye.',
-                    'She&apos;s safe now, and she has something to tell you...',
-                    '&nbsp;',
-                    '\n - \n',
-                    '&nbsp;',
-                    'Nevada, 1874',
-                    'It&apos;s a boy.',
-                    'You hold him up with glee.',
-                    'You and Darlene watch your newborn open his eyes for the very first time.',
-                    'You hold him up with glee.',
-                    'He would live a good life now. The oil had made you rich beyond your wildest dreams, and you had all you could ask for.',
-                    'Still, you would return to your home in the desert, and continue the dream you and Darlene once held.'
+                    {'text':'-'},
+                    {'text':'You fire a shot into the bear. Mid run, the beast stumbles. Turning away from them both, it cowers away into the storm, leaving you and your wife be.'},
+                    {'text':'Darlene looks at you with a gleam in her eye.'},
+                    {'text':'She&apos;s safe now}, and she has something to tell you...'},
+                    {'text':'&nbsp;'},
+                    {'text':'-'},
+                    {'text':'&nbsp;'},
+                    {'text':'Nevada}, 1874'},
+                    {'text':'It&apos;s a boy.'},
+                    {'text':'You hold him up with glee.'},
+                    {'text':'You and Darlene watch your newborn open his eyes for the very first time.'},
+                    {'text':'You hold him up with glee.'},
+                    {'text':'He would live a good life now. The oil had made you rich beyond your wildest dreams, and you had all you could ask for.'},
+                    {'text':'Still, you would return to your home in the desert, and continue the dream you and Darlene once held.'}
                   ])
                   clearTimeout(bearDeathTimer)
                 }else{
@@ -221,9 +221,19 @@ const darlene = {
           }
         ],
         onEnter: () => {
+          helper.printlnStack([
+            {
+              'text':'The wolf begins to cirlce you...',
+              "time":10000
+            },{
+              'text':'You must react befor it is to late...',
+              "time":12000
+            }
+          ]);
+
           wolfDeathTimer = setTimeout(function(){
             helper.message("You waited too long to act. The wolf&apos;s sharp teeth pierce through your neck, and the world fades to black as your agony dissipates.");
-          }, 100000);
+          }, 30000);
         }
       },
       
@@ -842,16 +852,21 @@ const darlene = {
       var timerTotal = 0;
       $.each(data, (index, value) =>{
         var tempTimer = 0;
-        if(typeof(data[index-1]) != "undefined"){
-          tempTimer = data[index-1].length * 66;
-          if(tempTimer < 2000){
-            tempTimer = 2000;
+        if(typeof(value.time) != "undefined"){
+          tempTimer = value.time;
+        }else{
+          if(typeof(data[index-1]) != "undefined"){
+            tempTimer = data[index-1].text.length * 66;
+            if(tempTimer < 2000){
+              tempTimer = 2000;
+            }
           }
         }
         timerTotal += tempTimer;
-        
+        console.log(value.text)
+        console.log(timerTotal)
         setTimeout(function(){
-          println(value);
+          println(value.text);
         }, timerTotal)
       });
     },
@@ -936,7 +951,7 @@ theBody.addEventListener('keyup', (event) => {
 });
 
 document.addEventListener('click', (event) => {
-  console.log("test")
+  
 });
 
 document.getElementById("audioOff").addEventListener("click", () =>{
