@@ -949,7 +949,7 @@ document.getElementById("audioOn").addEventListener("click", () =>{
 function startingAnim(){
   helper.slideUp(() => {
 
-    helper.quoteAnim($("#introText p"), 2000, 6000, () => {
+    helper.quoteAnim($("#introText p"), 2000, 4000, () => {
       helper.introState = 2;
       helper.dotdotdotAni();
     });

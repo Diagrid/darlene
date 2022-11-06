@@ -10,10 +10,8 @@
     font-size: 1em;
     font-family: 'Cutive', monospace;
     line-height: 5vh;
-    letter-spacing: 0.1rem;
     margin: 0;
-    overflow-x: hidden;
-    /* cursor: none;  */
+    overflow-x: hidden;    
   }
 
 
