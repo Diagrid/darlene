@@ -791,12 +791,9 @@ const darlene = {
         showNextQuote();
     },
     quoteAnimSkip: (quotes) =>{
-      console.log(Math.floor(quotes.eq(helper.quoteIndex % quotes.length).css("opacity")))
       if(Math.floor(quotes.eq(helper.quoteIndex % quotes.length).css("opacity"))){
-        console.log("test")
         quotes.eq(helper.quoteIndex % quotes.length).stop().css({opacity:1})
       }else{
-        console.log("test2")
         quotes.eq(helper.quoteIndex % quotes.length).stop().stop().css({opacity:1})
       }
     },
