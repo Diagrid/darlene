@@ -714,7 +714,7 @@
   }
 
   .darleneTxt.loop ul li {
-    animation: smoke 3s cubic-bezier(0.66, 0.03, 0.6, 0.72) infinite;
+    animation: smoke 5s cubic-bezier(0.66, 0.03, 0.6, 0.72) infinite;
   }
 
   .darleneTxt.loopEnd ul li {
@@ -722,7 +722,7 @@
   }
 
   .darleneTxt.start ul li{
-    animation: smokeFade 3s linear forwards;
+    animation: smokeFade 5s linear forwards;
   }
 
   @keyframes smokeFade {
@@ -805,6 +805,7 @@
     animation-name: fly-cycle;
     animation-timing-function: steps(10);
     animation-iteration-count: infinite;
+    transform: rotate(15deg);
   }
   .birdOne {
     animation-duration: 1.5s;
