@@ -56,7 +56,7 @@ const darlene = {
       {
         id: 'failedCrops',
         name: 'Failed Crops',   
-        desc: `Your failure lies before you. The crops have grown less than half the amount you’d wished for, and will sustain you little in this harsh climate.`,
+        desc: `Your failure lies before you. The crops have grown less than half the amount you&apos;d wished for, and will sustain you little in this harsh climate.`,
         items: [
           {
             name: ['Jerky',],
@@ -65,9 +65,11 @@ const darlene = {
             isTakeable: true,
             onUse: () => {
               if(disk.roomId === 'valleyWolf'){
+                var valleyWolf = getRoom('valleyWolf');
+                valleyWolf.wolfSatus = false;
                 println('The animal takes the food gratefully, and runs off into the distance. Despite the danger, you are glad you did not have to kill it.');
-                enterRoom('valley')
                 clearTimeout(wolfDeathTimer)
+                enterRoom('wolfDeath')
               } else ('This is no time for a meal.')
             },
           }
@@ -130,22 +132,29 @@ const darlene = {
             onUse: function () {
               var gun = getItemInInventory('gun');
               if (disk.roomId === 'valleyWolf') {
-                println ('You fire your only shot at the poor beast and miss. It scatters into the distance. You’re unlikely to see him again, but you feel restless with him on the loose regardless.')
-                enterRoom ('valley')
+                println ('You fire your only shot at the poor beast and miss. It scatters into the distance. You&apos;re unlikely to see him again, but you feel restless with him on the loose regardless.')
+                var valleyWolf = getRoom('valleyWolf');
+                valleyWolf.wolfSatus = false;
                 clearTimeout(wolfDeathTimer)
+                enterRoom('wolfDeath')
               }else if(disk.roomId === 'mine'){
                 if(gun.loaded == 1){
-                  println ('You fire a shot into the bear. Mid run, the beast stumbles. Turning away from them both, it cowers away into the storm, leaving you and your wife be.')
-                  println ('Darlene looks at you with a gleam in her eye.')
-                  println ('She’s safe now, and she has something to tell you...')
-                  println('-')
-                  println('Nevada, 1874')
-                  println('It’s a boy.')
-                  println('You hold him up with glee.')
-                  println('You and Darlene watch your newborn open his eyes for the very first time.')
-                  println('You hold him up with glee.')
-                  println('He would live a good life now. The oil had made you rich beyond your wildest dreams, and you had all you could ask for.')
-                  println('Still, you would return to your home in the desert, and continue the dream you and Darlene once held.')
+                  helper.printlnStack([
+                    '\n - \n ',
+                    'You fire a shot into the bear. Mid run, the beast stumbles. Turning away from them both, it cowers away into the storm, leaving you and your wife be.',
+                    'Darlene looks at you with a gleam in her eye.',
+                    'She&apos;s safe now, and she has something to tell you...',
+                    '&nbsp;',
+                    '\n - \n',
+                    '&nbsp;',
+                    'Nevada, 1874',
+                    'It&apos;s a boy.',
+                    'You hold him up with glee.',
+                    'You and Darlene watch your newborn open his eyes for the very first time.',
+                    'You hold him up with glee.',
+                    'He would live a good life now. The oil had made you rich beyond your wildest dreams, and you had all you could ask for.',
+                    'Still, you would return to your home in the desert, and continue the dream you and Darlene once held.'
+                  ])
                   clearTimeout(bearDeathTimer)
                 }else{
                   println ('The gun is not loaded. The bear presses towards Darlene at pace.');
@@ -190,8 +199,9 @@ const darlene = {
        {
         id: 'valleyWolf',
         name: 'A Wolf Attacks',
-        desc: `On your return from the cabin, you hear a fierce growl.\nIt is small, but it looks as though it hasn’t eaten for weeks - something you can see not just in his bony frame, but in the wild look in his eyes.`,
+        desc: `On your return from the cabin, you hear a fierce growl.\nIt is small, but it looks as though it hasn&apos;t eaten for weeks - something you can see not just in his bony frame, but in the wild look in his eyes.`,
         firstDesc: ``,
+        wolfSatus:true,
         exits: [
           {
             dir: 'north',
@@ -212,22 +222,44 @@ const darlene = {
         ],
         onEnter: () => {
           wolfDeathTimer = setTimeout(function(){
-            helper.message("You waited too long to act. The wolf’s sharp teeth pierce through your neck, and the world fades to black as your agony dissipates.");
+            helper.message("You waited too long to act. The wolf&apos;s sharp teeth pierce through your neck, and the world fades to black as your agony dissipates.");
           }, 100000);
         }
       },
       
       {
         id: 'wolfDeath',
+        exits: [
+          {
+            dir: 'west',
+            id: 'home',
+          },
+          {
+            dir: 'north',
+            id: 'hut',
+          },
+          {
+            dir: 'east',
+            id: 'deadEnd',
+          },
+          {
+            dir: 'south',
+            id: 'riverbed',
+          }
+        ],
         onEnter: () => {
-          helper.message("As you try to run away, the wolf’s sharp teeth pierce through your neck, and the world fades to black as your agony dissipates.");
+          var valleyWolf = getRoom('valleyWolf');
+          if(valleyWolf.wolfSatus){
+            helper.message("As you try to run away, the wolf&apos;s sharp teeth pierce through your neck, and the world fades to black as your agony dissipates.");
+          }
         }
+        
       },
       {
         id: 'deadEnd',
         name: 'Dead end',
         desc: `At the other end of the valley, a dead end faces you.`,
-        firstDesc: `It doesn’t appear as though Darlene has been this way.\nYou can only go $$West$$, the way you came.`,
+        firstDesc: `It doesn&apos;t appear as though Darlene has been this way.\nYou can only go $$West$$, the way you came.`,
         exits: [
           {
             dir: 'west',
@@ -240,7 +272,7 @@ const darlene = {
         id: 'riverbed',
         name: 'Stream',
         desc: `A small stream has eeked its way in from the mountain, glittering in the sunshine. `,
-        firstDesc: `Darlene has clearly been here. Why didn’t she come straight back?`,
+        firstDesc: `Darlene has clearly been here. Why didn&apos;t she come straight back?`,
         items: [
           {
             name: ['Water'],
@@ -341,7 +373,7 @@ const darlene = {
       {
         id: 'rockDeath',
         name: 'Unstable path',
-        desc: `The stones slip from beneath your feet, and start a huge rockslide.\nFor a moment, you manage to hold yourself up, but soon your feet get stuck beneath the slide, and you are forced to the ground while it continues moving at speed.\nIt’s not long before you are entirely buried under moving rock, forcing your breath from you until you can fight no longer.\nYou died.`,
+        desc: `The stones slip from beneath your feet, and start a huge rockslide.\nFor a moment, you manage to hold yourself up, but soon your feet get stuck beneath the slide, and you are forced to the ground while it continues moving at speed.\nIt&apos;s not long before you are entirely buried under moving rock, forcing your breath from you until you can fight no longer.\nYou died.`,
       },
 
 
@@ -432,7 +464,7 @@ const darlene = {
           {
             dir: 'north',
             id: 'desert',
-            block: `It’s no longer safe without the right gear.`,
+            block: `It&apos;s no longer safe without the right gear.`,
           },
         ],
       },
@@ -507,7 +539,7 @@ const darlene = {
 {
   id: 'voice',
   name: 'Desert',
-  desc: `It’s Darlene. It sounds as if she’s calling for you, but you cannot understand what she is saying.`,
+  desc: `It&apos;s Darlene. It sounds as if she&apos;s calling for you, but you cannot understand what she is saying.`,
   firstDesc: `You can head in any direction.`,
   exits: [
     {
@@ -532,7 +564,7 @@ const darlene = {
 {
   id: 'nothing4',
   name: 'Desert',
-  desc: `You can hear Darlene’s voice faintly.\nYou shout, but you hear no return.`,
+  desc: `You can hear Darlene&apos;s voice faintly.\nYou shout, but you hear no return.`,
   firstDesc: `A rockwall faces to the $$West$$. You can either go $$North$$, $$East$$, or $$South$$.`,
   exits: [
     {
@@ -553,7 +585,7 @@ const darlene = {
 {
   id: 'nothing3',
   name: 'Desert',
-  desc: `You can hear your wife’s voice, but you can’t make out what she is saying.`,
+  desc: `You can hear your wife&apos;s voice, but you can&apos;t make out what she is saying.`,
   firstDesc: `The path is blocked to the $$East$$, but you can head $$North$$, $$West$$ or $$outh$$.`,
   exits: [
     {
@@ -576,7 +608,7 @@ const darlene = {
 {
   id: 'voice2',
   name: 'Desert',
-  desc: `The sun beats down heavily upon you.\nDarlene can hear your voice and understand it; you’re getting close.\nShe’s urging you to come, and quickly.\nHer voice seems to vibrate in your ears however, and a violent ringing begins as the world shakes around you. You suddenly realise you are in desperate need of a drink.`,
+  desc: `The sun beats down heavily upon you.\nDarlene can hear your voice and understand it; you&apos;re getting close.\nShe&apos;s urging you to come, and quickly.\nHer voice seems to vibrate in your ears however, and a violent ringing begins as the world shakes around you. You suddenly realise you are in desperate need of a drink.`,
   firstDesc: `You can head in any direction.`,
   exits: [
     {
@@ -648,7 +680,7 @@ const darlene = {
 {
   id: 'mine',
   name: 'Abandoned Mine',
-  desc: `Darlene’s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
+  desc: `Darlene&apos;s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
   exits: [
     {
       dir: 'north',
@@ -677,7 +709,7 @@ const darlene = {
 {
   id: 'mineDeath',
   onEnter: () => {
-    helper.message("You run away, the piercing sound of your wife’s screams filling your ears until it slowly fades into the distance.\n-\nNevada, later that month\nYou make sure the knot is tight, then raise yourself onto the chair in the centre of the cabin.\nHer voice has never left your ears, and there is only one way you believe you can silence it.\nYou kick the chair out from beneath you, and the noose clasps around your neck.\nIt’s over.\nYou died.");
+    helper.message("You run away, the piercing sound of your wife&apos;s screams filling your ears until it slowly fades into the distance.\n-\nNevada, later that month\nYou make sure the knot is tight, then raise yourself onto the chair in the centre of the cabin.\nHer voice has never left your ears, and there is only one way you believe you can silence it.\nYou kick the chair out from beneath you, and the noose clasps around your neck.\nIt&apos;s over.\nYou died.");
   }
 },
 
@@ -685,7 +717,7 @@ const darlene = {
 // {
 //   id: 'mineDeath',
 //   name: 'Abandoned Mine',
-//   desc: `Darlene’s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
+//   desc: `Darlene&apos;s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
 //   firstDesc: `There is a rockwall to the North and East, but you can still head South or West.`,
 //   exits: [
 //     {
@@ -732,69 +764,51 @@ const darlene = {
 
 // Ending brackets (nothing after this)
 
-
     ],
   };
-
+  
   var helper = {
     aniTimeout:0,
     aniCallback:0,
-    anim: (elements, classAni, aniDelay, callback, counter) => {
-      if(typeof (counter) === 'undefined'){
-        var aniCounter = 0;
-        var delayCounter = 0;
-        if (typeof (elements.length) === 'undefined') {
-          elements.length = 1;
-          elementsTemp = elements;
-          elements = [];
-          elements[0] = elementsTemp;
+    quoteIndex: -1,
+    introState:0,
+    quoteAnim: (quotes, fadeInTime, delayTime, complete) => {
+        helper.quoteIndex = -1;
+        
+        function showNextQuote() {
+            ++helper.quoteIndex;
+            
+            if(helper.quoteIndex == quotes.length){
+              complete();
+            }else{
+              quotes.eq(helper.quoteIndex % quotes.length)
+                  .fadeIn(fadeInTime)
+                  .delay(delayTime)
+                  .fadeIn(1, showNextQuote)
+            }
         }
+        
+        showNextQuote();
+    },
+    quoteAnimSkip: (quotes) =>{
+      console.log(Math.floor(quotes.eq(helper.quoteIndex % quotes.length).css("opacity")))
+      if(Math.floor(quotes.eq(helper.quoteIndex % quotes.length).css("opacity"))){
+        console.log("test")
+        quotes.eq(helper.quoteIndex % quotes.length).stop().css({opacity:1})
       }else{
-        aniCounter = counter[0];
-        delayCounter = counter[1];
-        aniCounter++;
-        delayCounter++;
-      }
-      if(typeof(elements[aniCounter]) !== 'undefined'){
-        if (!elements[aniCounter].classList.contains(classAni)) {
-          helper.animTimeout(elements, aniDelay, classAni, callback, aniCounter, delayCounter);
-        } 
-      }else{
-        setTimeout(callback, aniDelay[delayCounter]*1000);
+        console.log("test2")
+        quotes.eq(helper.quoteIndex % quotes.length).stop().stop().css({opacity:1})
       }
     },
-    animTimeout: (loopElements, loopDelay, classAni, callback, aniCounter, delayCounter) => {
-      helper.aniCallback = {
-        loopElements:loopElements,
-        classAni:classAni,
-        loopDelay:loopDelay,
-        counter: [aniCounter, delayCounter],
-        run: () => {
-          if(typeof(loopElements[aniCounter]) !== 'undefined'){
-            helper.anim(loopElements, classAni, loopDelay, callback, [aniCounter, delayCounter]);
-            setTimeout(() => {
-              window.scrollTo(0, document.body.scrollHeight);
-            }, 1000)
-          }else{
-            setTimeout(callback, loopDelay[delayCounter]*1000)
-          }
-        }
+    dotdotdotAni: () =>{
+      if(helper.introState == 2){
+        helper.quoteAnim($("#introText .dotdotdot"), 500, 1000, () => {
+          $("#introText .dotdotdot").hide();
+          setTimeout(() => {
+            helper.dotdotdotAni();
+          }, 2000)
+        });
       }
-      aniTimeout = setTimeout(() => {
-        loopElements[aniCounter].className = loopElements[aniCounter].className + ' ' + classAni;
-        helper.aniCallback.run();
-      }, loopDelay[delayCounter]*1000); 
-      
-    },
-    animSkip: () =>{
-      clearTimeout(aniTimeout);
-      // we need to skip all animations before this one here 
-      for(var i = helper.aniCallback.counter[0]; i > 0; i--){
-        console.log(helper.aniCallback.loopElements[i-1]);
-        helper.aniCallback.loopElements[i].classList.add(helper.aniCallback.classAni+'Skip');
-      }
-      helper.aniCallback.loopElements[helper.aniCallback.counter[0]].classList.add(helper.aniCallback.classAni+'Skip');
-      helper.aniCallback.run();
     },
     message:(deathMessage, deathTitle, deathBtn) => {
       if(typeof(deathMessage) === "undefined" || deathMessage.length === 0){
@@ -806,9 +820,6 @@ const darlene = {
       if(typeof(deathBtn) === "undefined" || deathBtn.length === 0){
         deathBtn = 'Restart?';
       }
-      // darlene = {};
-      // helper.fadeAudio(false, "ost");
-      // helper.toggleAudio(true, "deathEnd");
       document.getElementById('deathScreen').getElementsByTagName('button')[0].innerHTML = deathBtn;
       document.getElementById('deathScreen').getElementsByTagName('h1')[0].innerHTML = deathTitle;
       document.getElementById('deathScreen').getElementsByTagName('p')[0].innerHTML = deathMessage;
@@ -829,6 +840,25 @@ const darlene = {
           document.getElementById(track).pause();
       }
     },
+
+    printlnStack: (data) => {
+      var timerTotal = 0;
+      $.each(data, (index, value) =>{
+        var tempTimer = 0;
+        if(typeof(data[index-1]) != "undefined"){
+          tempTimer = data[index-1].length * 66;
+          if(tempTimer < 2000){
+            tempTimer = 2000;
+          }
+        }
+        timerTotal += tempTimer;
+        
+        setTimeout(function(){
+          println(value);
+        }, timerTotal)
+      });
+    },
+
     fadeAudio: (dir, track) => {
       if(dir){
         
@@ -836,7 +866,6 @@ const darlene = {
         while(document.getElementById(track).volume > 0){
           var temp = document.getElementById(track).volume
           temp = (temp - 0.0001).toFixed(4);
-          console.log(temp)
           document.getElementById(track).volume = temp;
         }
       }
@@ -851,8 +880,10 @@ const darlene = {
       document.getElementById("imageTitleWrapper").classList.add('overlaySlideUp')
       document.getElementById("allBirdContainer").classList.add('transition')
       document.getElementById("txtTitleWrapper").classList.add('transition')
-      
-      callback();
+      setTimeout(() =>{
+        helper.introState = 1;
+        callback();
+      }, 8000);
     },
     runEnding: (text) => {
       var str = '';
@@ -878,7 +909,15 @@ const darlene = {
 
 var theBody = document.getElementById('theBody');
 var firstEnter = 0
-theBody.addEventListener('keyup', function(event) {
+
+/* 
+  helper.introState = 0, not started
+  helper.introState = 1, slide up completed
+  helper.introState = 2, text fade completed
+  helper.introState = 3, game loaded 
+*/
+
+theBody.addEventListener('keyup', (event) => {
   if (event.keyCode === 13) {
     firstEnter++
     if(firstEnter == 1){
@@ -887,60 +926,41 @@ theBody.addEventListener('keyup', function(event) {
       startingAnim()
     }else{
       if(typeof(disk) === "undefined"){
-        //helper.animSkip();
+        if(helper.introState == 1){
+          helper.quoteAnimSkip($("#introText p"));
+        }else if(helper.introState == 2){
+          helper.introState == 3;
+          $(".input").removeClass("hide");
+          loadDisk(darlene);
+        }
       }
     }
   }
 });
 
-document.getElementById("audioOff").addEventListener("click", function(){
+document.addEventListener('click', (event) => {
+  console.log("test")
+});
+
+document.getElementById("audioOff").addEventListener("click", () =>{
   helper.toggleAudio(true, "ost");
 })
-document.getElementById("audioOn").addEventListener("click", function(){
+document.getElementById("audioOn").addEventListener("click", () =>{
   helper.toggleAudio(false, "ost");
 })
 
-
-function pressToContinue() {
-  loadDisk(darlene)
-}
-
 function startingAnim(){
   helper.slideUp(() => {
-    // [12,3,3,3,3,3]
-    helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [8,7,5,5,5,8], () =>{
-      // helper.anim(document.getElementsByClassName('input'), 'fadeIn')
 
-      //document.getElementsByClassName('input')[0].className = 'input';
-      //loadDisk(darlene);
-
-      
-      //Press to continue button
-      let btn = document.createElement("button");
-      btn.innerHTML = "Press to continue";
-      btn.id = "continue";
-      document.getElementById("introText").appendChild(btn);
-      btn.addEventListener('click', event => {
-        loadDisk(darlene);
-        btn.remove;
-        document.getElementsByClassName('input')[0].className = 'input';
-      });
-    })
+    helper.quoteAnim($("#introText p"), 2000, 6000, () => {
+      helper.introState = 2;
+      helper.dotdotdotAni();
+    });
   });
-
-
-//
-
-
-  // helper.anim(document.getElementById('titleWrapper'), 'fadeOut', [0,5], () =>{
-  //   document.getElementById('titleWrapper').classList.add('hide');
-  //   document.getElementById('introText').classList.add('show');
-  //   helper.anim(document.getElementById('introText').getElementsByTagName('p'), 'fadeIn', [1,3,3,3,3,5], () =>{
-  //     document.getElementsByClassName('input')[0].className = 'input';
-  //     // helper.anim(document.getElementsByClassName('input'), 'fadeIn')
-  //     loadDisk(darlene);
-  //   })
-  // })
 }
+
+$(document).ready(function(){
+  $("body").css({"visibility":"unset"})
+})
 
 

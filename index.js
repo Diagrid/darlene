@@ -726,15 +726,17 @@ let println = (line, className) => {
     str = addStyleTags(str, '$$', 'span', 'direction');
   }
 
+
   // maintain line breaks
   while (str.includes('\n')) {
     str = str.replace('\n', '<br>');
   }
 
+  
   output.appendChild(newLine).innerHTML = str;
   setTimeout(() => {
     window.scrollTo(0, document.body.scrollHeight);
-  }, 1000)
+  }, 500)
 };
 
 // predict what the user is trying to type
@@ -859,9 +861,9 @@ let enterRoom = (id) => {
       println(`That exit doesn't seem to go anywhere.`);
       return;
     }
-
+    
     println(room.img, 'img');
-
+    
     if (room.name) {
       println(`${getName(room.name)}`, 'room-name');
     }
