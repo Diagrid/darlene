@@ -69,6 +69,7 @@ const darlene = {
                 valleyWolf.wolfSatus = false;
                 println('The animal takes the food gratefully, and runs off into the distance. Despite the danger, you are glad you did not have to kill it.');
                 clearTimeout(wolfDeathTimer)
+                helper.clearPrintlnStack();
                 enterRoom('wolfDeath')
               } else ('This is no time for a meal.')
             },
@@ -136,6 +137,7 @@ const darlene = {
                 var valleyWolf = getRoom('valleyWolf');
                 valleyWolf.wolfSatus = false;
                 clearTimeout(wolfDeathTimer)
+                helper.clearPrintlnStack();
                 enterRoom('wolfDeath')
               }else if(disk.roomId === 'mine'){
                 if(gun.loaded == 1){
@@ -782,6 +784,7 @@ const darlene = {
     aniCallback:0,
     quoteIndex: -1,
     introState:0,
+    printlnStackTimer:[],
     quoteAnim: (quotes, fadeInTime, delayTime, complete) => {
         helper.quoteIndex = -1;
         
@@ -849,11 +852,9 @@ const darlene = {
 
       let volume = document.getElementById('volume-slider');
       volume.addEventListener("change", function(e) {
-      document.getElementById(track).volume = e.currentTarget.value / 100;
-})
+        document.getElementById(track).volume = e.currentTarget.value / 100;
+      })
     },
-    
-
     printlnStack: (data) => {
       var timerTotal = 0;
       $.each(data, (index, value) =>{
@@ -869,14 +870,19 @@ const darlene = {
           }
         }
         timerTotal += tempTimer;
-        console.log(value.text)
-        console.log(timerTotal)
-        setTimeout(function(){
-          println(value.text);
-        }, timerTotal)
+        helper.printlnStackTimer.push(
+          setTimeout(function(){
+            println(value.text);
+          }, timerTotal)
+        );
+        console.log(helper.printlnStackTimer);
       });
     },
-
+    clearPrintlnStack: () => {
+      $.each(helper.printlnStackTimer, (index, value) =>{
+        clearTimeout(helper.printlnStackTimer[index]);
+      });
+    },
     fadeAudio: (dir, track) => {
       if(dir){
         
