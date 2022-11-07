@@ -143,11 +143,11 @@ const darlene = {
                     {'text':'-'},
                     {'text':'You fire a shot into the bear. Mid run, the beast stumbles. Turning away from them both, it cowers away into the storm, leaving you and your wife be.'},
                     {'text':'Darlene looks at you with a gleam in her eye.'},
-                    {'text':'She&apos;s safe now}, and she has something to tell you...'},
+                    {'text':'She&apos;s safe now, and she has something to tell you...'},
                     {'text':'&nbsp;'},
                     {'text':'-'},
                     {'text':'&nbsp;'},
-                    {'text':'Nevada}, 1874'},
+                    {'text':'Nevada, 1874'},
                     {'text':'It&apos;s a boy.'},
                     {'text':'You hold him up with glee.'},
                     {'text':'You and Darlene watch your newborn open his eyes for the very first time.'},
@@ -618,7 +618,7 @@ const darlene = {
 {
   id: 'voice2',
   name: 'Desert',
-  desc: `The sun beats down heavily upon you.\nDarlene can hear your voice and understand it; you&apos;re getting close.\nShe&apos;s urging you to come, and quickly.\nHer voice seems to vibrate in your ears however, and a violent ringing begins as the world shakes around you. You suddenly realise you are in desperate need of a drink.`,
+  desc: `The sun beats down heavily upon you.\nDarlene can hear your voice and understand it; you&apos;re getting close.\nShe&apos;s urging you to come, and quickly.`,
   firstDesc: `You can head in any direction.`,
   exits: [
     {
