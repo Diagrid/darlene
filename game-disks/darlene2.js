@@ -223,10 +223,10 @@ const darlene = {
         onEnter: () => {
           helper.printlnStack([
             {
-              'text':'The wolf begins to cirlce you...',
+              'text':'The wolf begins to circle around you...',
               "time":10000
             },{
-              'text':'You must react befor it is to late...',
+              'text':'You must react before it is to late...',
               "time":12000
             }
           ]);
@@ -293,7 +293,7 @@ const darlene = {
               var theFlask = getItemInInventory('flask')
               if(typeof(theFlask) !== "undefined"){
                 if(theFlask.isFull){
-                  println(`its only a 500ml flask, there only so much water it can hold.`);
+                  println(`It's only a 500ml flask, there is only so much water it can hold.`);
                 }else{
                   println(`You fill your flask.`);
                 }
