@@ -966,6 +966,10 @@ document.addEventListener('click', (event) => {
   
 });
 
+document.getElementById("settingsButton").addEventListener("click", () =>{
+  $("#settings").slideToggle();
+})
+
 document.getElementById("audioOff").addEventListener("click", () =>{
   helper.toggleAudio(true, "ost");
 })

@@ -326,86 +326,151 @@
 
   /* audio */
   #audioWrapper{
-    position: fixed;
-    right: 10px;
-    bottom: 10px;
     z-index: 7000;
+    width: 270px;
   }
+  
   #audioWrapper svg{
     fill:rgba(218, 195, 172, 0.2);
     width: 50px;
     height: 50px;
   }
 
-  /* settings */
-  #settingsWrapper{
-    position: fixed;
-    right: 10px;
-    bottom: 20px;
-    z-index: 700000;
-  }
-
-  #settingsModal .modal-content{
-    background-color: #ebd5bd ;
-  }
-
-  #settingsModal{
-    
-    z-index: 7000;
-  }
-
-  #settingsModal h1{
-    color: #272425;
-  }
-  
-  #settingsButton {
-    visibility: visible;
-    border: none;
-  }
-
   .slider {
     -webkit-appearance: none;
-    width: 100%;
-    height: 25px;
-    background: white;
+    width: 70%;
+    height: 15px;
+    border-radius: 5px;
+    background: #4b4440;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
-    border-style: solid;
-    border-width: 2px
+    margin-left: 20px;
   }
-  
+
   .slider:hover {
     opacity: 1;
   }
-  
+
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 25px;
     height: 25px;
-    background: #272425;
-    cursor: pointer;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: #272425;
+    border-radius: 50%;
+    background: #dac3ac;
     cursor: pointer;
   }
 
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #dac3ac;
+    cursor: pointer;
+  }
+
+
+
+  /* help button*/ 
+  #helpBtn{
+    color: #a49383;
+    background-color: #4b4440;
+    width: 35px;
+    height: 35px;
+    margin: 5px 10px;
+    padding: 0;
+    
+    display: inline-block;
+    border-radius: 100%;
+    font-size: 23px;
+    text-align: center;
+    text-decoration: none;
+    line-height: normal;
+
+    -webkit-box-shadow: inset -1px -1px 1px 0px rgb(0 0 0 / 25%);
+       -moz-box-shadow: inset -1px -1px 1px 0px rgba(0,0,0,0.25);
+            box-shadow: inset -1px -1px 1px 0px rgb(0 0 0 / 25%);
+    
+    
+  }
+
+  /* settings */
+  #settingsWrapper, #settings{
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    z-index: 700000;
+  }
+
+  #settings{
+    display: none;
+    right: 65px;
+    bottom: 0px;
+    padding: 0px 15px;
+    background: rgb(144 118 105 / 5%);
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  #settings > div{
+    display: inline-block;
+  }
+
+  #helpModal{
+    z-index: 8000;
+    font-family: sans-serif;
+    color: #ebd5bd;
+    position: relative;
+  }
+
+  #helpModal .modal-content{
+    background-color: #91776a ;
+  }
+  
+  #helpModal p{
+    font-size: 16px;
+    line-height: normal;
+  }
+  
+  #helpModal .modal-header{
+    border-bottom: none;
+  }
+
+  #helpModal .btn-close{
+    width: 1px;
+    height: 1px;
+  }
+
+  #settingsButton {
+    visibility: visible;
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    min-height: 0;
+    height: 46px;
+    width: 46px;
+    line-height: 0;
+  }
+
+  #settingsButton:hover{
+    color: #a49383;
+    background: #403a38;
+  }
+
+
+
   .btn.button-add, 
-.btn.button-bullet, 
-.btn.button-add:active, 
-.btn.button-bullet:active
-.btn.button-add:focus, 
-.btn.button-bullet:focus {
-  background-color: transparent;
-  box-shadow: none;
-  -webkit-box-shadow: none;
-}
+  .btn.button-bullet, 
+  .btn.button-add:active, 
+  .btn.button-bullet:active
+  .btn.button-add:focus, 
+  .btn.button-bullet:focus {
+    background-color: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
 
   /* dead */
   #deathScreen{
