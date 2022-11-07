@@ -846,7 +846,13 @@ const darlene = {
           document.getElementById("audioOff").classList = ""
           document.getElementById(track).pause();
       }
+
+      let volume = document.getElementById('volume-slider');
+      volume.addEventListener("change", function(e) {
+      document.getElementById(track).volume = e.currentTarget.value / 100;
+})
     },
+    
 
     printlnStack: (data) => {
       var timerTotal = 0;
