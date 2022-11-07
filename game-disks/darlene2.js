@@ -181,7 +181,7 @@ const darlene = {
               const exit = getExit('north', room.exits);
               if (exit.block) {
                 delete exit.block;
-                println(`You attach the rope securely to a nearby rock, and begin your descent.`);
+                println(`You attach the rope securely to a nearby rock. Go $$North$$ to begin your descent.`);
               } else {
                 println(`There is nothing to use the rope on.`);
               }
