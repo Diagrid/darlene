@@ -156,7 +156,7 @@
 
   
   /* title style */
-  #imageTitleWrapper {
+  .imageTitleWrapper {
     height: 100vh;
     width: 100vw;
     top: 100vh;
@@ -165,8 +165,12 @@
     background-color: #272425;
     z-index: 3500;
   }
+  
+  #endingWrapper{
+    display: none;
+  }
 
-  #titleWrapper img{
+  #titleWrapper img, #endingWrapper img{
     height: 100vh;
     position: absolute;
     bottom: 0;
@@ -174,16 +178,8 @@
     transform: translate(-50%, 0%);
 
   }
-  
-  #txtTitleWrapper.transition{
-    -webkit-animation: fadeOut linear 1s 1 normal forwards;
-     -moz-animation: fadeOut linear 1s 1 normal forwards;
-      -ms-animation: fadeOut linear 1s 1 normal forwards; 
-     -o-animation: fadeOut linear 1s 1 normal forwards;
-        animation: fadeOut linear 1s 1 normal forwards;
-  }
 
-  #darleneWord{
+  .darleneWord{
     -webkit-animation: textSmoke ease-in 2s 1 normal infinite;
      -moz-animation: textSmoke ease-in 2s 1 normal infinite;
       -ms-animation: textSmoke ease-in 2s 1 normal infinite;
@@ -191,7 +187,16 @@
         animation: textSmoke ease-in 2s 1 normal infinite;
   }
 
-  #imageTitleWrapper.overlaySlideUp{
+
+  .txtTitleWrapper.transitionUp{
+    -webkit-animation: fadeOut linear 1s 1 normal forwards;
+     -moz-animation: fadeOut linear 1s 1 normal forwards;
+      -ms-animation: fadeOut linear 1s 1 normal forwards; 
+     -o-animation: fadeOut linear 1s 1 normal forwards;
+        animation: fadeOut linear 1s 1 normal forwards;
+  }
+
+  .imageTitleWrapper.overlaySlideUp{
     -webkit-animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
      -moz-animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
       -ms-animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
@@ -199,7 +204,7 @@
         animation: overlaySlideUp ease-in 3s 3s 1 normal forwards;
   }
 
-  #darleneWord.transition{
+  .darleneWord.transitionUp{
     -webkit-animation: fadeOut linear 1s 3s 1 normal forwards;
      -moz-animation: fadeOut linear 1s 3s 1 normal forwards;
       -ms-animation: fadeOut linear 1s 3s 1 normal forwards; 
@@ -207,7 +212,7 @@
         animation: fadeOut linear 1s 3s 1 normal forwards;
   }
 
-  #darleneHouse.transition{
+  .darleneHouse.transitionUp{
     -webkit-animation: slideUp ease-in 3s 3s 1 normal forwards;
      -moz-animation: slideUp ease-in 3s 3s 1 normal forwards;
       -ms-animation: slideUp ease-in 3s 3s 1 normal forwards;
@@ -215,21 +220,21 @@
         animation: slideUp ease-in 3s 3s 1 normal forwards;
   }
 
-  #darleneHill.transition{
+  .darleneHill.transitionUp{
     -webkit-animation: slideUp ease-in 5s 3s 1 normal forwards;
      -moz-animation: slideUp ease-in 5s 3s 1 normal forwards;
       -ms-animation: slideUp ease-in 5s 3s 1 normal forwards;
      -o-animation: slideUp ease-in 5s 3s 1 normal forwards;
         animation: slideUp ease-in 5s 3s 1 normal forwards;
   }
-  #allBirdContainer.transition{
+  .allBirdContainer.transitionUp{
     -webkit-animation: slideUpBird ease-in 3s 3s 1 normal forwards;
      -moz-animation: slideUpBird ease-in 3s 3s 1 normal forwards;
       -ms-animation: slideUpBird ease-in 3s 3s 1 normal forwards;
      -o-animation: slideUpBird ease-in 3s 3s 1 normal forwards;
         animation: slideUpBird ease-in 3s 3s 1 normal forwards;
   }
-  #darleneMt.transition{
+  .darleneMt.transitionUp{
     -webkit-animation: slideUp ease-in 7s 3s 1 normal forwards;
      -moz-animation: slideUp ease-in 7s 3s 1 normal forwards;
       -ms-animation: slideUp ease-in 7s 3s 1 normal forwards;
@@ -237,7 +242,7 @@
         animation: slideUp ease-in 7s 3s 1 normal forwards;
   }
 
-  #darleneSky.transition{
+  .darleneSky.transitionUp{
     -webkit-animation: slideUp ease-in 10s 3s 1 normal forwards;
      -moz-animation: slideUp ease-in 10s 3s 1 normal forwards;
       -ms-animation: slideUp ease-in 10s 3s 1 normal forwards;
@@ -246,23 +251,23 @@
   }
 
   
-  #darleneHouse{
+  .darleneHouse{
     z-index:5000;
   }
-  #darleneWord{
+  .darleneWord{
     z-index:4000;
   }
-  #darleneHill{
+  .darleneHill{
     z-index:3000;
   }
-  #darleneMt{
+  .darleneMt{
     z-index:2000;
   }
-  #darleneSky{
+  .darleneSky{
     z-index:1000;
   }
 
-  #txtTitleWrapper{
+  .txtTitleWrapper{
     text-align: center;
     position: fixed;
     bottom: 5vh;
@@ -271,7 +276,7 @@
     z-index: 6000;
   }
 
-  #txtTitleWrapper h3{
+  .txtTitleWrapper h3{
     color: #c5a78f;
     margin: 0;
     padding: 0;
@@ -280,7 +285,7 @@
     
   }
 
-  #txtTitleWrapper h3 span{
+  .txtTitleWrapper h3 span{
     color: #fff7f0;
   }
 

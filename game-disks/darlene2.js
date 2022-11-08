@@ -894,39 +894,23 @@ const darlene = {
         }
       }
     },
-    slideUp: (callback) => {
-      document.getElementById("darleneTxt").classList.add('start')
-      document.getElementById("darleneTxt").classList.add('loopEnd')
-      document.getElementById("darleneTxt").classList.remove('loop')
-      for(var i = 0; i < document.getElementById("titleWrapper").getElementsByTagName('img').length; i++){
-        document.getElementById("titleWrapper").getElementsByTagName('img')[i].classList.add('transition');
+    slideUp: (wrapper, callback) => {
+      var id = document.getElementById(wrapper);
+      id.getElementsByClassName("darleneTxt")[0].classList.add('start')
+      id.getElementsByClassName("darleneTxt")[0].classList.add('loopEnd')
+      id.getElementsByClassName("darleneTxt")[0].classList.remove('loop')
+      for(var i = 0; i < id.getElementsByTagName('img').length; i++){
+        id.getElementsByTagName('img')[i].classList.add('transitionUp');
       }
-      document.getElementById("imageTitleWrapper").classList.add('overlaySlideUp')
-      document.getElementById("allBirdContainer").classList.add('transition')
-      document.getElementById("txtTitleWrapper").classList.add('transition')
+      id.getElementsByClassName("imageTitleWrapper")[0].classList.add('overlaySlideUp')
+      id.getElementsByClassName("allBirdContainer")[0].classList.add('transitionUp')
+      id.getElementsByClassName("txtTitleWrapper")[0].classList.add('transitionUp')
       setTimeout(() =>{
         helper.introState = 1;
         callback();
       }, 8000);
     },
-    runEnding: (text) => {
-      var str = '';
-      var loopTime = [];
-      for(var i = 0; i < text.length; i++){
-        if(i === 0){
-          str += `<p class='h1'>${text[i]}</p>`;
-        }else{
-          str += `<p>${text[i]}</p>`;
-        }
-        loopTime.push(3); 
-      }
-
-      document.getElementById("endText").innerHTML = str;
-      document.getElementById("endText").classList.add('show');
-      
-      helper.anim(document.getElementById('endText').getElementsByTagName('p'), 'fadeIn', loopTime, () =>{
-          
-      });
+    runEnding: (wrapper, callback) => {
     }
   }
 
@@ -978,7 +962,7 @@ document.getElementById("audioOn").addEventListener("click", () =>{
 })
 
 function startingAnim(){
-  helper.slideUp(() => {
+  helper.slideUp("titleWrapper", () => {
 
     helper.quoteAnim($("#introText p"), 2000, 4000, () => {
       helper.introState = 2;
