@@ -526,11 +526,8 @@ let help = () => {
     TAKE:   'take book'
     GO:     'go north'
     USE:    'use door'
-    TALK:   'talk to mary'
     ITEMS:  list items in the room
     INV:    list inventory items
-    SAVE:   save the current game
-    LOAD:   load the last saved game
     HELP:   this help menu
   `;
   println(instructions);
