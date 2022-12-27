@@ -13,7 +13,7 @@ const darlene = {
         id: 'home', // Unique identifier for this room. Entering a room will set the disk's roomId to this.
         name: 'Your home', // Displayed each time the player enters the room.
         desc: `You are in front of your house.`, // Displayed when the player first enters the room.
-        firstDesc:`To the $$North$$ is your farm, to the $$East$$ is the path through the valley, and to the $$West$$ is the pass over the mountains.`,
+        firstDesc:`To the $$North$$ is your farm, to the $$East$$ is the path through the valley, and to the $$West$$ is the pass over the mountains.\n Make sure to prepare for your journey; without supplies, you will surely fail.`,
         items: [
           {
             name: ['Flask', 'bottle', 'water'],
@@ -61,7 +61,7 @@ const darlene = {
           {
             name: ['Jerky',],
             desc: 'Tasty tasty jerky', // Displayed when the player looks at the item.
-            longName: "Just one piece of food is ready to eat - a piece of !!jerky!! hanging in front of you.",
+            longName: "Just one piece of food is ready to eat - some !!jerky!! hanging in front of you.",
             isTakeable: true,
             onUse: () => {
               if(disk.roomId === 'valleyWolf'){
@@ -283,7 +283,7 @@ const darlene = {
       {
         id: 'riverbed',
         name: 'Stream',
-        desc: `A small stream has eeked its way in from the mountain, glittering in the sunshine. `,
+        desc: `A small stream is before you, glittering in the sunshine. `,
         firstDesc: `Darlene has clearly been here. Why didn&apos;t she come straight back?`,
         items: [
           {
@@ -692,7 +692,7 @@ const darlene = {
 {
   id: 'mine',
   name: 'Abandoned Mine',
-  desc: `Darlene&apos;s voice gets clearer and clearer as you approach through the storm.\nYou approach the remnants of a mine, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
+  desc: `Darlene&apos;s voice gets clearer and clearer as you move through the storm.\n As it clears, the remnants of a mine are revealed, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
   exits: [
     {
       dir: 'north',
