@@ -492,19 +492,25 @@
 
   #deathScreen > div {
     position: relative;
-    text-align: center;
     left: 50%;
     right: 0;
     top: 45%;
     bottom: 0;
     transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 500px;
+    width: 80%;
     line-height: 2;
+  }
+  
+  #deathScreen h1{
+    margin-bottom: 5vh;
+  }
+
+  #deathScreen p{
+    white-space: pre-wrap;
   }
 
   #deathScreen .btn{
-    margin: 20px 0 0 0;
+    margin: 2vh 0 0 0;
   }
 
   .keyWord{

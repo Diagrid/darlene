@@ -466,7 +466,7 @@ const darlene = {
       {
         id: 'sheerEdge',
         name: 'Sheer Edge',
-        desc: `A sheer edge faces you, looking over desert sands and more mountains ahead.`,
+        desc: `A sheer edge faces you, looking over desert sands and more mountains ahead.\nThere's a storm a brewin'. Smoke is rising from the North.`,
         firstDesc: `Darlene has been here, but a rockslide has followed her, blocking the path down.`,
         exits: [
           {
@@ -692,7 +692,7 @@ const darlene = {
 {
   id: 'mine',
   name: 'Abandoned Mine',
-  desc: `Darlene&apos;s voice gets clearer and clearer as you move through the storm.\n As it clears, the remnants of a mine are revealed, abandoned some years ago.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
+  desc: `Darlene&apos;s voice gets clearer and clearer as you move through the storm.\n As it clears, the remnants of a mine are revealed, abandoned some years ago.\nA firepit is raging, fuelled by anything in reach.\nAlmost falling in, you stop before a small well. Your wife is just 10ft below, and it looks like she has only sprained her ankle.\nYou are both desperately glad to see your spouse, and tell each other so.\nAs you prepare to lift her out, she says she has something to tell you, she has found another well nearby, full of oil! Everything is finally going to be okay. And, she says, there is something else...\nA low growl sounds from behind you. A great bear rears onto its hind legs and roars, then begins to pounce towards Darlene.`,
   exits: [
     {
       dir: 'north',
@@ -711,17 +711,29 @@ const darlene = {
       id: 'mineDeath',
     }
   ],
+  
   onEnter: () => {
+
+    helper.printlnStack([
+      {
+        'text':'The bear begins to circle around you...',
+        "time":32000
+      },{
+        'text':'You must react before it is to late...',
+        "time":15000
+      }
+    ]);
+
     bearDeathTimer = setTimeout(function(){
-      helper.message("You waited too long to act. The bear reaches Darlene, and begins swiping at her furiously - barely missing her cowering body.\nHearing your screams, it instead runs towards you at pace.\nIn a vicious tussle, you manage to twist the bear's neck, but not before being fatally wounded by a brutal swipe of his paws.\nThe world fades as Darlene screams your name, over, and over.");
-    }, 200000);
+      helper.message("You waited too long to act. The bear reaches Darlene, and begins swiping at her furiously - barely missing her cowering body.\n\nHearing your screams, it instead runs towards you at pace.\n\nIn a vicious tussle, you manage to twist the bear's neck, but not before being fatally wounded by a brutal swipe of his paws.\n\nThe world fades as Darlene screams your name, over, and over.");
+    }, 55000);
   }
 },
 
 {
   id: 'mineDeath',
   onEnter: () => {
-    helper.message("You run away, the piercing sound of your wife&apos;s screams filling your ears until it slowly fades into the distance.\n-\nNevada, later that month\nYou make sure the knot is tight, then raise yourself onto the chair in the centre of the cabin.\nHer voice has never left your ears, and there is only one way you believe you can silence it.\nYou kick the chair out from beneath you, and the noose clasps around your neck.\nIt&apos;s over.\nYou died.");
+    helper.message("You run away, the piercing sound of your wife&apos;s screams filling your ears until it slowly fades into the distance.\n\n-\n\nNevada, later that month\n\nYou make sure the knot is tight, then raise yourself onto the chair in the centre of the cabin.\n\nHer voice has never left your ears, and there is only one way you believe you can silence it.\n\nYou kick the chair out from beneath you, and the noose clasps around your neck.\n\nIt&apos;s over.\n\nYou died.");
   }
 },
 
@@ -835,7 +847,8 @@ const darlene = {
       document.getElementById('deathScreen').getElementsByTagName('p')[0].innerHTML = deathMessage;
       document.getElementById('deathScreen').className='';
       document.getElementById('btnRestart').addEventListener('click', function(event) {
-        window.document.location = window.document.location
+        //window.document.location = window.document.location
+        helper.runEnding();
       });
     },
     toggleAudio: (state, track) => {
@@ -910,7 +923,17 @@ const darlene = {
         callback();
       }, 8000);
     },
-    runEnding: (wrapper, callback) => {
+    runEnding: () => {
+      $("#titleWrapper").hide();
+      $("#introText").hide();
+      $("#endingWrapper").show()
+      $("#deathScreen > div").fadeOut(3000);
+      $("#deathScreen").fadeOut(5000);
+      // setTimeout(function(){
+      //   $("#deathScreen").fadeOut(5000);
+      // }, 8000);
+      // console.log("test");
+
     }
   }
 
